@@ -1,0 +1,151 @@
+---
+const sabores = [
+  {
+    nombre: "Clásico",
+    color: "#eaab33",
+    img: "/img/pack-clasico.png",
+    desc: "El original: carne, vinagre de sidra y sal. El punto de partida.",
+    chips: ["30 g", "50% proteína"],
+  },
+  {
+    nombre: "Ajo",
+    color: "#a3c8fc",
+    img: "/img/pack-ajo.png",
+    desc: "Sabor intenso a ajo, para los que van de frente.",
+    chips: ["30 g", "Cero azúcar"],
+  },
+  {
+    nombre: "Picante",
+    color: "#e1772b",
+    img: "/img/pack-picante.png",
+    desc: "Para arrancar el día con calor.",
+    chips: ["30 g", "50% proteína"],
+  },
+  {
+    nombre: "Hot Chili",
+    color: "#b1a4f8",
+    img: "/img/pack-hot-chili.png",
+    desc: "El más picante de la línea.",
+    chips: ["30 g", "Cero azúcar"],
+  },
+  {
+    nombre: "Pimienta negra",
+    color: "#9ed9ab",
+    img: "/img/pack-pimienta.png",
+    desc: "Pimienta molida gruesa. Picor seco, aroma fuerte.",
+    chips: ["30 g", "Gluten free"],
+  },
+  {
+    nombre: "Dulce Picante",
+    color: "#d8534f",
+    img: "/img/pack-dulce-picante.png",
+    desc: "Un toque dulce y un final que pica.",
+    chips: ["30 g", "Snack natural"],
+  },
+];
+---
+<section class="productos" id="productos">
+  <div class="cab wrap">
+    <h2 class="disp">Nuestros sabores</h2>
+  </div>
+  <div class="pista">
+    {sabores.map((s) => (
+      <article class="panel" data-color={s.color}>
+        <img src={s.img} alt={`Kichar ${s.nombre}`} />
+        <div>
+          <h3 class="disp">{s.nombre}</h3>
+          <p>{s.desc}</p>
+          <div class="meta">
+            {s.chips.map((c) => <span class="chip">{c}</span>)}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+.productos {
+  position: relative;
+  overflow: hidden;
+  background: var(--dorado);
+}
+
+.productos .cab {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+
+.productos .cab h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+
+.pista {
+  display: flex;
+  height: 100svh;
+  min-height: 620px;
+  width: max-content;
+}
+
+.panel {
+  position: relative;
+  width: min(78vw, 900px);
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 110px 40px 40px;
+}
+
+.panel:first-child { margin-left: 6vw; }
+
+.panel img {
+  width: clamp(200px, 24vw, 330px);
+  filter: drop-shadow(0 26px 26px #00000033);
+}
+
+.panel h3 {
+  margin: 0 0 8px;
+  font-size: clamp(2rem, 4.4vw, 3.6rem);
+}
+
+.panel p {
+  margin: 0 0 14px;
+  max-width: 32ch;
+}
+
+.panel .meta {
+  font-family: var(--body);
+  font-size: 13px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 820px) {
+  .pista {
+    height: auto;
+    min-height: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: auto;
+    padding-block: 120px 30px;
+  }
+
+  .panel {
+    width: 86vw;
+    flex: none;
+    grid-template-columns: 1fr;
+    scroll-snap-align: center;
+    padding: 0 16px;
+    gap: 16px;
+  }
+
+  .panel:first-child { margin-left: 0; }
+  .panel img { width: 200px; }
+}
+</style>

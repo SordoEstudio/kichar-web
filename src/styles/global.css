@@ -1,0 +1,137 @@
+/* ==========================================
+   KICHAR SNACK — Global CSS
+   Paleta oficial: docs/brand.md
+   ========================================== */
+
+/* ---------- Fuentes ---------- */
+@font-face {
+  font-family: "PaytoneOne";
+  src: url("/fonts/PaytoneOne-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Rock Salt";
+  src: url("/fonts/RockSalt-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Variables de marca ---------- */
+:root {
+  /* Neutros */
+  --crema: #faf9ef;
+  --tinta: #141210;
+  --tinta-2: #4a4540;
+
+  /* Sabores */
+  --dorado:  #eaab33;  /* Clásico */
+  --ajo:     #a3c8fc;  /* Ajo */
+  --picante: #e1772b;  /* Picante */
+  --chili:   #b1a4f8;  /* Hot Chili */
+  --pimienta:#9ed9ab;  /* Pimienta Negra */
+  --dulce:   #d8534f;  /* Dulce Picante */
+
+  /* Tipografías */
+  --display: "PaytoneOne", "Arial Black", Impact, sans-serif;
+  --body:    "Open Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:    "Rock Salt", monospace;
+
+  color-scheme: light;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--crema);
+  color: var(--tinta);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+:focus-visible {
+  outline: 3px solid var(--picante);
+  outline-offset: 3px;
+}
+
+/* ---------- Utilidades ---------- */
+.wrap {
+  padding-left:  max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+.disp {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: .86;
+  text-transform: uppercase;
+}
+
+h2.disp {
+  font-size: clamp(2.4rem, 7vw, 6rem);
+  text-wrap: balance;
+  margin: 0;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  max-width: 34ch;
+}
+
+.pill {
+  display: inline-block;
+  background: var(--c, var(--dorado));
+  border-radius: 10px;
+  padding: .15em .55em;
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: .9rem;
+}
+
+.chip {
+  display: inline-block;
+  background: var(--crema);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+/* ---------- Ticker ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .ticker .row { animation: none; }
+  .cinta .in   { animation: none; }
+}

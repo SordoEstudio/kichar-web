@@ -1,0 +1,49 @@
+---
+---
+<div class="ticker" aria-label="Banner promocional">
+  <div class="row">
+    <span>Nuevo: sabor Pimienta Negra</span>
+    <span>Envíos a todo el país</span>
+    <span>Carne posta, versión snack</span>
+    <span>50% proteína</span>
+  </div>
+  <div class="row" aria-hidden="true">
+    <span>Nuevo: sabor Pimienta Negra</span>
+    <span>Envíos a todo el país</span>
+    <span>Carne posta, versión snack</span>
+    <span>50% proteína</span>
+  </div>
+</div>
+
+<style>
+.ticker {
+  position: relative;
+  z-index: 30;
+  background: var(--tinta);
+  color: var(--crema);
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 14px;
+  padding-block: 8px;
+}
+
+.ticker .row {
+  display: inline-flex;
+  gap: 28px;
+  padding-right: 28px;
+  animation: tick 22s linear infinite;
+}
+
+.ticker .row span::after {
+  content: "✦";
+  margin-left: 28px;
+  color: var(--dorado);
+}
+
+@keyframes tick {
+  to { transform: translateX(-100%); }
+}
+</style>

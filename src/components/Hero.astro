@@ -1,0 +1,142 @@
+---
+---
+<section class="hero" id="inicio">
+  <div class="fondo capa" data-vel="0.1"></div>
+
+  <div class="marca capa" data-vel="-0.25">
+    <img src="/img/logo-dark.png" alt="Kichar Snack" />
+  </div>
+
+  <svg class="aro capa" viewBox="0 0 800 300" fill="none" aria-hidden="true">
+    <path class="trazo" d="M60 190 C 40 110, 260 50, 430 52 C 640 54, 770 110, 748 170 C 726 236, 520 270, 360 266 C 190 262, 70 240, 60 190 C 54 160, 110 120, 200 98"
+      stroke="#141210" stroke-width="9" stroke-linecap="round"/>
+  </svg>
+
+  <img class="pouch capa" src="/img/pack-clasico.png" alt="Paquete Kichar sabor Clásico" />
+
+  <div class="claim c1 capa">50% proteína<small>por paquete</small></div>
+  <div class="claim c2 capa">Cero azúcar</div>
+
+  <img class="capa t4" src="/img/trozo-4.webp" alt="" data-fg />
+  <img class="capa t2" src="/img/trozo-3.webp" alt="" data-fg />
+
+  <svg class="capa d-numeral" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+    <path d="M38 10 L28 92 M68 8 L58 90 M12 36 L90 30 M8 66 L86 60"
+      stroke="#141210" stroke-width="7" stroke-linecap="round"/>
+  </svg>
+  <svg class="capa d-estrella" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+    <path d="M60 8 L70 44 L110 34 L80 62 L106 98 L66 80 L50 114 L44 76 L8 84 L36 56 L14 22 L50 38 Z"
+      stroke="#141210" stroke-width="5" stroke-linejoin="round"/>
+  </svg>
+  <svg class="capa d-garabato" viewBox="0 0 160 70" fill="none" aria-hidden="true">
+    <path d="M6 56 C 30 52, 34 14, 22 16 C 8 18, 20 60, 52 54 C 76 50, 74 12, 62 14 C 48 16, 60 58, 92 52 C 116 48, 114 10, 102 12 C 88 14, 100 58, 152 46"
+      stroke="#e1772b" stroke-width="8" stroke-linecap="round"/>
+  </svg>
+
+  <img class="capa t1" src="/img/trozo-1.webp" alt="" data-fg />
+  <img class="capa t3" src="/img/trozo-5.webp" alt="" data-fg />
+
+  <div class="slogan pill">CARNE POSTA, VERSIÓN SNACK</div>
+</section>
+
+<style>
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 600px;
+  overflow: hidden;
+  background: var(--crema);
+}
+
+.hero .fondo {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 42%;
+  background: var(--dorado);
+}
+
+.hero .marca {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 9%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.hero .marca img {
+  width: clamp(260px, 38vw, 580px);
+  height: auto;
+}
+
+.hero .aro {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: min(80vw, 820px);
+  translate: -50% -50%;
+}
+
+.hero .pouch {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: clamp(200px, 24vw, 340px);
+  translate: -50% -50%;
+  filter: drop-shadow(0 30px 30px #0000003a);
+}
+
+.hero .claim {
+  position: absolute;
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1;
+  font-size: clamp(1rem, 2vw, 1.6rem);
+}
+
+.hero .claim small {
+  display: block;
+  font-family: var(--body);
+  font-weight: 500;
+  text-transform: none;
+  font-size: .7em;
+}
+
+.hero .c1 { left: 12%; top: 42%; }
+.hero .c2 { right: 12%; top: 42%; text-align: right; }
+
+.hero .slogan {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  translate: -50% 0;
+  font-size: clamp(1rem, 2.2vw, 1.7rem);
+  white-space: nowrap;
+  --c: var(--crema);
+  color: var(--tinta);
+}
+
+.capa {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.t1 { width: clamp(130px, 17vw, 260px); left: -2%; top: 62%; }
+.t2 { width: clamp(120px, 14vw, 220px); right: -1%; top: 22%; filter: blur(1.5px); }
+.t3 { width: clamp(110px, 13vw, 200px); right: 6%; bottom: -4%; }
+.t4 { width: clamp(90px, 10vw, 160px); left: 16%; top: 16%; filter: blur(2.5px); opacity: .9; }
+
+.d-estrella { width: clamp(70px, 8vw, 120px); right: 22%; top: 30%; }
+.d-garabato { width: clamp(90px, 10vw, 150px); left: 24%; bottom: 14%; }
+.d-numeral  { width: clamp(60px, 6vw, 90px); left: 7%; top: 30%; }
+
+@media (max-width: 640px) {
+  .hero .c1 { left: 5%; top: 40%; }
+  .hero .c2 { right: 5%; top: 40%; }
+  .hero .pouch { top: 62%; }
+  .d-estrella, .d-numeral { display: none; }
+}
+</style>

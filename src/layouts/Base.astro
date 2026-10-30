@@ -1,0 +1,28 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Snack cárnico deshidratado. Sin azúcar, sin conservantes, 50% proteína." } = Astro.props;
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content={description} />
+  <meta name="color-scheme" content="light" />
+  <title>{title}</title>
+
+  <!-- Preload fuentes críticas -->
+  <link rel="preload" href="/fonts/PaytoneOne-Regular.ttf" as="font" type="font/ttf" crossorigin />
+  <link rel="preload" href="/fonts/OpenSans-Variable.ttf" as="font" type="font/ttf" crossorigin />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <slot />
+</body>
+</html>

@@ -1,0 +1,76 @@
+---
+---
+<footer class="pie wrap" id="contacto">
+  <div class="logo-footer">
+    <img src="/img/logo-light.png" alt="Kichar Snack" />
+  </div>
+  <p class="tagline">Carne posta, versión snack.</p>
+  <div class="redes">
+    <span>Instagram</span>
+    <span>WhatsApp</span>
+    <span>Contacto</span>
+    <span>kicharsnack.com.ar</span>
+  </div>
+  <div class="gigante disp" aria-label="Kichar">
+    <span>K</span><span>I</span><span>C</span><span>H</span><span>A</span><span>R</span>
+  </div>
+</footer>
+
+<style>
+.pie {
+  position: relative;
+  background: var(--tinta);
+  color: var(--crema);
+  padding-block: 100px 120px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.logo-footer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.logo-footer img {
+  width: clamp(180px, 28vw, 320px);
+  height: auto;
+}
+
+.tagline {
+  font-family: var(--body);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  opacity: .7;
+  margin: 0 0 32px;
+}
+
+.pie .redes {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.pie .redes span {
+  border: 2px solid var(--crema);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: .85rem;
+  cursor: pointer;
+}
+
+.gigante {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  font-size: clamp(3.4rem, 15vw, 15rem);
+  line-height: .85;
+  gap: .02em;
+}
+
+.gigante span { display: inline-block; }
+</style>

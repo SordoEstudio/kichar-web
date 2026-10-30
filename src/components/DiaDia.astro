@@ -1,0 +1,100 @@
+---
+const cartas = [
+  { i: 0, c: "var(--dorado)",   titulo: "Entrenamiento", pack: "/img/pack-clasico.png",  alt: "Clásico", scene: "Gym: abrís el paquete después de entrenar" },
+  { i: 1, c: "var(--ajo)",      titulo: "Trabajo",       pack: "/img/pack-ajo.png",       alt: "Ajo",     scene: "Escritorio / oficina, paquete junto a la notebook" },
+  { i: 2, c: "var(--pimienta)", titulo: "Viajes",        pack: "/img/pack-pimienta.png",  alt: "Pimienta",scene: "Ruta / auto / mochila de viaje" },
+  { i: 3, c: "var(--picante)",  titulo: "Aire libre",    pack: "/img/pack-picante.png",   alt: "Picante", scene: "Trekking, bici o pesca al aire libre" },
+];
+---
+<section class="dia wrap" id="dia">
+  <div style="max-width:980px;margin:0 auto">
+    <span class="pill" style="--c:var(--chili)">Kichar en tu día a día</span>
+    <h2 class="disp" style="margin-top:18px">Va donde vas</h2>
+  </div>
+
+  <div class="mazo">
+    {cartas.map((c) => (
+      <div class="carta" style={`--i:${c.i};--c:${c.c}`}>
+        <div class="foto">
+          <em>{c.scene}</em>
+        </div>
+        <div class="rotulo">
+          <span class="disp">{c.titulo}</span>
+          <img class="mini" src={c.pack} alt={c.alt} />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+.dia {
+  position: relative;
+  padding-block: 120px 80px;
+}
+
+.mazo {
+  max-width: 980px;
+  margin: 48px auto 0;
+  display: grid;
+  gap: 40px;
+}
+
+.carta {
+  position: sticky;
+  top: calc(80px + var(--i) * 18px);
+  height: min(62svh, 520px);
+  border-radius: 22px;
+  overflow: hidden;
+  border: 3px solid var(--tinta);
+  background: var(--c);
+  transform-origin: 50% 0;
+}
+
+.carta .foto {
+  position: absolute;
+  inset: -12% 0;
+  display: grid;
+  place-items: center;
+  background: repeating-linear-gradient(
+    135deg,
+    #00000010 0 14px,
+    transparent 14px 28px
+  ),
+  var(--c);
+}
+
+.carta .foto em {
+  font-family: var(--body);
+  font-style: normal;
+  font-size: 13px;
+  background: var(--crema);
+  padding: 6px 10px;
+  border-radius: 6px;
+  max-width: 80%;
+  text-align: center;
+  color: var(--tinta-2);
+}
+
+.carta .rotulo {
+  position: absolute;
+  left: 24px;
+  bottom: 22px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+}
+
+.carta .rotulo .disp {
+  font-size: clamp(2rem, 6vw, 4.4rem);
+  color: var(--tinta);
+}
+
+.carta .mini {
+  width: clamp(70px, 9vw, 110px);
+  rotate: 8deg;
+  filter: drop-shadow(0 10px 10px #0003);
+}
+</style>

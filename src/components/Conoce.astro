@@ -1,0 +1,100 @@
+---
+---
+<section class="conoce wrap" id="conoce">
+  <div class="grid">
+    <div>
+      <span class="pill" style="--c:var(--pimienta)">Conocé Kichar</span>
+      <h2 class="disp split" style="margin-top:18px">Carne posta, versión snack</h2>
+      <p class="lead" style="margin-top:22px">
+        Durante generaciones, la carne deshidratada fue la forma de conservar los alimentos.
+        Recuperamos esa idea y la llevamos al presente: un snack cárnico para una vida activa.
+      </p>
+      <div class="pasos">
+        <div class="paso">
+          <b>Carne de pastura</b>
+          <span>Cortes magros, sin rellenos.</span>
+        </div>
+        <div class="paso">
+          <b>Sidra + sal</b>
+          <span>Vinagre de manzana y sal. Nada más.</span>
+        </div>
+        <div class="paso">
+          <b>Secado lento</b>
+          <span>Deshidratado sin azúcar ni conservantes.</span>
+        </div>
+      </div>
+    </div>
+    <div class="pila">
+      <svg viewBox="0 0 600 360" fill="none" aria-hidden="true">
+        <path class="dibujar"
+          d="M40 230 C 20 140, 200 60, 340 64 C 500 68, 590 140, 566 210 C 540 290, 360 320, 240 312 C 120 304, 44 280, 40 230 C 38 200, 80 160, 150 132"
+          stroke="#141210" stroke-width="7" stroke-linecap="round"/>
+      </svg>
+      <img src="/img/pila.webp" alt="Pila de carne deshidratada Kichar" style="position:relative" />
+    </div>
+  </div>
+</section>
+
+<style>
+.conoce {
+  position: relative;
+  padding-block: 120px 140px;
+  overflow: hidden;
+}
+
+.conoce .grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.conoce .split .w {
+  display: inline-block;
+  opacity: .18;
+}
+
+.conoce .pila {
+  position: relative;
+}
+
+.conoce .pila svg {
+  position: absolute;
+  inset: -6% -4%;
+  width: 108%;
+  height: 112%;
+}
+
+.pasos {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 36px;
+}
+
+.paso {
+  flex: 1 1 150px;
+  min-width: 0;
+  border-top: 3px solid var(--tinta);
+  padding-top: 10px;
+}
+
+.paso b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+}
+
+.paso span {
+  font-size: .92rem;
+  color: var(--tinta-2);
+}
+
+@media (max-width: 820px) {
+  .conoce .grid { grid-template-columns: 1fr; }
+}
+</style>

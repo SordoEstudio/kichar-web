@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="404 — Kichar Snack" description="Esta página no existe. Pero Kichar sí.">
+  <div class="not-found">
+    <img src="/img/logo-light.png" alt="Kichar Snack" class="logo" />
+    <h1 class="disp">Esta página se deshidrató</h1>
+    <p>No encontramos lo que buscabas, pero Kichar sí existe. Y está buenísimo.</p>
+    <a href="/" class="pill" style="--c:var(--dorado);color:var(--tinta)">Volver al inicio</a>
+    <img src="/img/pack-clasico.png" alt="" class="pack-deco" />
+  </div>
+</Base>
+
+<style>
+body {
+  background: var(--tinta);
+  color: var(--crema);
+}
+
+.not-found {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  place-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  gap: 20px;
+  position: relative;
+}
+
+.logo {
+  width: clamp(200px, 30vw, 340px);
+  margin: 0 auto;
+}
+
+h1.disp {
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  color: var(--dorado);
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  font-family: var(--body);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  max-width: 34ch;
+  margin: 0 auto;
+  opacity: .8;
+}
+
+.pill {
+  text-decoration: none;
+  font-size: 1rem;
+  padding: .4em 1.2em;
+  transition: opacity .15s;
+}
+.pill:hover { opacity: .85; }
+
+.pack-deco {
+  width: clamp(160px, 22vw, 280px);
+  margin: 0 auto;
+  filter: drop-shadow(0 20px 30px #0006);
+  rotate: 12deg;
+}
+</style>
