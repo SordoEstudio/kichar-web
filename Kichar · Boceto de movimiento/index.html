@@ -1,0 +1,560 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Kichar · Boceto de movimiento</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one page de Kichar a escala real + notas técnicas (Harvi → Chiare) superpuestas en cada sección. Look único de marca (crema + negro), sin modo oscuro a propósito. */
+:root{
+  --crema:#FBF8EF; --tinta:#141210; --tinta-2:#4a4540;
+  --clasico:#F8AA1F; --ajo:#93C3EE; --pimienta:#7FD8A9; --picante:#FF7A1F; --dulce:#F2504B; --chili:#B7A3EE;
+  --nota-bg:#141210; --nota-fg:#FBF8EF; --nota-acc:#F8AA1F;
+  --display:"Archivo", "Arial Black", Impact, sans-serif;
+  --body:"Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{background:var(--crema);color:var(--tinta);font-family:var(--body);font-size:16px;line-height:1.5;overflow-x:hidden}
+img{max-width:100%;display:block}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.disp{font-family:var(--display);font-weight:900;font-stretch:125%;letter-spacing:-.01em;line-height:.86;text-transform:uppercase}
+h2.disp{font-size:clamp(2.4rem,7vw,6rem);text-wrap:balance;margin:0}
+.lead{font-size:clamp(1.05rem,1.6vw,1.3rem);max-width:34ch}
+.pill{display:inline-block;background:var(--c,var(--clasico));border-radius:10px;padding:.15em .55em;font-weight:900;font-stretch:110%;text-transform:uppercase}
+:focus-visible{outline:3px solid var(--picante);outline-offset:3px}
+
+/* ---------- Barra del boceto ---------- */
+.barra{position:fixed;inset:auto 0 0 0;z-index:50;display:flex;gap:12px;align-items:center;justify-content:space-between;
+  background:var(--tinta);color:var(--crema);font-family:var(--mono);font-size:12px;
+  padding-block:10px calc(10px + env(safe-area-inset-bottom,0px))}
+.barra b{color:var(--nota-acc);font-weight:600}
+.barra .acc{display:flex;gap:8px;flex-wrap:wrap}
+.barra button,.barra a{font:inherit;color:var(--tinta);background:var(--crema);border:0;border-radius:6px;padding:6px 10px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.barra button[aria-pressed="false"]{background:transparent;color:var(--crema);outline:1px solid #ffffff55}
+@media (max-width:640px){.barra .t-largo{display:none}}
+
+/* ---------- Notas técnicas ---------- */
+.nota{position:absolute;z-index:40;right:max(16px,env(safe-area-inset-right,0px));bottom:84px;width:min(340px,calc(100% - 32px));
+  background:var(--nota-bg);color:var(--nota-fg);font-family:var(--mono);font-size:12px;line-height:1.5;border-radius:4px;padding:14px 16px 16px;
+  box-shadow:6px 6px 0 var(--nota-acc);transform:rotate(-.6deg)}
+.nota h4{margin:0 0 6px;font-family:var(--body);font-size:15px;font-weight:900;font-stretch:115%;text-transform:uppercase;color:var(--nota-acc)}
+.nota dl{margin:0;display:grid;gap:8px}
+.nota dt{font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.nota dd{margin:0}
+.nota ul{margin:0;padding-left:1.1em}
+.nota .tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;margin-right:4px;background:#ffffff1f}
+.nota .tag.ok{background:#7FD8A9;color:var(--tinta)} .nota .tag.falta{background:#F2504B;color:#fff}
+body.sin-notas .nota{display:none}
+@media (max-width:820px){.nota{position:relative;right:auto;bottom:auto;margin:24px auto 0;transform:none}}
+
+/* ---------- Ticker promo (banner administrable) ---------- */
+.ticker{position:relative;z-index:30;background:var(--tinta);color:var(--crema);overflow:hidden;white-space:nowrap;font-weight:800;font-stretch:115%;text-transform:uppercase;font-size:14px;padding-block:8px}
+.ticker .row{display:inline-flex;gap:28px;padding-right:28px;animation:tick 22s linear infinite}
+.ticker .row span::after{content:"✦";margin-left:28px;color:var(--clasico)}
+@keyframes tick{to{transform:translateX(-100%)}}
+
+/* ---------- 1. HERO ---------- */
+.hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:var(--crema)}
+.hero .fondo{position:absolute;inset:auto 0 0 0;height:42%;background:var(--clasico)}
+.hero .marca{position:absolute;left:0;right:0;top:9%;text-align:center}
+.hero .marca .disp{font-size:clamp(3.4rem,14.5vw,15rem)}
+.hero .marca small{display:block;font-weight:900;font-stretch:110%;font-size:clamp(1rem,2.4vw,2rem);letter-spacing:.02em}
+.hero .aro{position:absolute;left:50%;top:58%;width:min(80vw,820px);translate:-50% -50%}
+.hero .pouch{position:absolute;left:50%;top:60%;width:clamp(200px,24vw,340px);translate:-50% -50%;filter:drop-shadow(0 30px 30px #0000003a)}
+.hero .claim{position:absolute;font-weight:900;font-stretch:110%;text-transform:uppercase;line-height:1;font-size:clamp(1rem,2vw,1.6rem)}
+.hero .claim small{display:block;font-weight:500;text-transform:none;font-size:.7em}
+.hero .c1{left:12%;top:42%} .hero .c2{right:12%;top:42%;text-align:right}
+.hero .slogan{position:absolute;left:50%;bottom:7%;translate:-50% 0;font-size:clamp(1rem,2.2vw,1.7rem);white-space:nowrap;--c:var(--crema)}
+.capa{position:absolute;pointer-events:none;will-change:transform}
+.t1{width:clamp(130px,17vw,260px);left:-2%;top:62%} .t2{width:clamp(120px,14vw,220px);right:-1%;top:22%;filter:blur(1.5px)}
+.t3{width:clamp(110px,13vw,200px);right:6%;bottom:-4%} .t4{width:clamp(90px,10vw,160px);left:16%;top:16%;filter:blur(2.5px);opacity:.9}
+.d-estrella{width:clamp(70px,8vw,120px);right:22%;top:30%} .d-garabato{width:clamp(90px,10vw,150px);left:24%;bottom:14%}
+.d-numeral{width:clamp(60px,6vw,90px);left:7%;top:30%}
+@media (max-width:640px){.hero .c1{left:5%;top:40%}.hero .c2{right:5%;top:40%}.hero .pouch{top:62%}.d-estrella,.d-numeral{display:none}}
+
+/* ---------- 2. CONOCÉ ---------- */
+.conoce{position:relative;padding-block:120px 140px;overflow:hidden}
+.conoce .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;max-width:1200px;margin:0 auto}
+.conoce .split .w{display:inline-block;opacity:.18}
+.conoce .pila{position:relative}
+.conoce .pila svg{position:absolute;inset:-6% -4%;width:108%;height:112%}
+.pasos{display:flex;gap:20px;flex-wrap:wrap;margin-top:36px}
+.paso{flex:1 1 150px;min-width:0;border-top:3px solid var(--tinta);padding-top:10px}
+.paso b{display:block;font-weight:900;font-stretch:115%;text-transform:uppercase;font-size:1.05rem}
+.paso span{font-size:.92rem;color:var(--tinta-2)}
+@media (max-width:820px){.conoce .grid{grid-template-columns:1fr}}
+
+/* ---------- 3. PRODUCTOS (scroll horizontal) ---------- */
+.productos{position:relative;overflow:hidden;background:var(--clasico);transition:none}
+.productos .cab{position:absolute;top:40px;left:0;right:0;z-index:5}
+.productos .cab h2{font-size:clamp(2rem,5vw,4rem)}
+.pista{display:flex;height:100svh;min-height:620px;width:max-content}
+.panel{position:relative;width:min(78vw,900px);height:100%;display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;padding:110px 40px 40px}
+.panel:first-child{margin-left:6vw}
+.panel img{width:clamp(200px,24vw,330px);filter:drop-shadow(0 26px 26px #00000033)}
+.panel h3{margin:0 0 8px;font-size:clamp(2rem,4.4vw,3.6rem)}
+.panel p{margin:0 0 14px;max-width:32ch}
+.panel .meta{font-family:var(--mono);font-size:13px;display:flex;gap:14px;flex-wrap:wrap}
+.panel .ingr{position:absolute;width:110px;right:16%;top:22%;opacity:.9}
+.chip{display:inline-block;background:var(--crema);border-radius:8px;padding:4px 10px;font-weight:800;font-size:14px;text-transform:uppercase;font-stretch:110%}
+@media (max-width:820px){
+  .pista{height:auto;min-height:0;overflow-x:auto;scroll-snap-type:x mandatory;width:auto;padding-block:120px 30px}
+  .panel{width:86vw;flex:none;grid-template-columns:1fr;scroll-snap-align:center;padding:0 16px;gap:16px}
+  .panel:first-child{margin-left:0}
+  .panel img{width:200px}
+  .productos .nota{margin-bottom:24px}
+}
+
+/* ---------- 4. POR QUÉ ---------- */
+.porque{position:relative;padding-block:120px 160px;overflow:hidden}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;max-width:1200px;margin:56px auto 0}
+.stat{position:relative;padding:22px 18px;border:3px solid var(--tinta);border-radius:18px;background:var(--crema)}
+.stat .n{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:clamp(2.6rem,5vw,4.4rem);line-height:.9;font-variant-numeric:tabular-nums}
+.stat b{display:block;text-transform:uppercase;font-stretch:110%;font-weight:900;margin-top:6px}
+.stat span{font-size:.9rem;color:var(--tinta-2)}
+.sello{position:absolute;top:-22px;right:-14px;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;text-align:center;font-weight:900;font-size:10px;line-height:1.05;text-transform:uppercase;background:var(--c);border:2px solid var(--tinta)}
+.cintas{position:relative;height:230px;margin-top:90px}
+.cinta{position:absolute;left:-10%;width:120%;white-space:nowrap;overflow:hidden;font-family:var(--display);font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:clamp(1.6rem,3.6vw,3rem);padding-block:10px;border-block:3px solid var(--tinta)}
+.cinta .in{display:inline-block}
+.cinta.a{top:30px;rotate:-4deg;background:var(--clasico)} .cinta.b{top:110px;rotate:3deg;background:var(--pimienta)}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---------- 5. DÍA A DÍA (cartas apiladas) ---------- */
+.dia{position:relative;padding-block:120px 80px}
+.mazo{max-width:980px;margin:48px auto 0;display:grid;gap:40px}
+.carta{position:sticky;top:calc(80px + var(--i)*18px);height:min(62svh,520px);border-radius:22px;overflow:hidden;border:3px solid var(--tinta);background:var(--c);transform-origin:50% 0}
+.carta .foto{position:absolute;inset:-12% 0;display:grid;place-items:center;
+  background:repeating-linear-gradient(135deg,#00000010 0 14px,transparent 14px 28px),var(--c)}
+.carta .foto em{font-family:var(--mono);font-style:normal;font-size:13px;background:var(--crema);padding:6px 10px;border-radius:6px;max-width:80%;text-align:center}
+.carta .rotulo{position:absolute;left:24px;bottom:22px;right:24px;display:flex;justify-content:space-between;align-items:end;gap:12px}
+.carta .rotulo .disp{font-size:clamp(2rem,6vw,4.4rem);color:var(--tinta)}
+.carta .mini{width:clamp(70px,9vw,110px);rotate:8deg;filter:drop-shadow(0 10px 10px #0003)}
+.dia .nota{position:sticky;top:auto;bottom:84px;margin-left:auto}
+
+/* ---------- 6. DISTRIBUIDORES ---------- */
+.distri{position:relative;background:var(--tinta);color:var(--crema);padding-block:120px;overflow:hidden}
+.distri .grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:1200px;margin:0 auto;align-items:center}
+.abanico{position:relative;height:440px}
+.abanico img{position:absolute;left:50%;bottom:0;width:200px;translate:-50% 0;transform-origin:50% 120%;filter:drop-shadow(0 20px 20px #0006)}
+form{display:grid;gap:12px;margin-top:24px;max-width:460px}
+label{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;display:grid;gap:4px}
+input,select{font:inherit;font-size:16px;padding:12px;border-radius:10px;border:2px solid var(--crema);background:transparent;color:var(--crema)}
+select option{color:var(--tinta)}
+.btn{font:inherit;font-weight:900;font-stretch:115%;text-transform:uppercase;background:var(--clasico);color:var(--tinta);border:0;border-radius:12px;padding:14px 18px;cursor:pointer}
+.ok-msg{font-family:var(--mono);font-size:13px;color:var(--pimienta)}
+@media (max-width:820px){.distri .grid{grid-template-columns:1fr}.abanico{height:330px}.abanico img{width:150px}}
+
+/* ---------- 7. CONTACTO / FOOTER ---------- */
+.pie{position:relative;padding-block:100px 120px;overflow:hidden;background:var(--crema)}
+.pie .redes{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.pie .redes span{border:2px solid var(--tinta);border-radius:999px;padding:8px 16px;font-weight:800;text-transform:uppercase;font-stretch:110%}
+.gigante{display:flex;justify-content:center;margin-top:40px;font-size:clamp(3.4rem,15vw,15rem)}
+.gigante span{display:inline-block}
+
+/* ---------- MATERIALES (documento) ---------- */
+.doc{background:#fff;border-top:3px solid var(--tinta);padding-block:90px 140px}
+.doc .in{max-width:1080px;margin:0 auto}
+.doc h2{font-size:clamp(2rem,5vw,3.6rem)}
+.doc p{max-width:68ch}
+.tabla{overflow-x:auto;margin-top:28px;border:2px solid var(--tinta);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid #1412101f}
+th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;background:var(--crema)}
+td:first-child{font-weight:800;white-space:nowrap}
+.prio{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:4px;white-space:nowrap}
+.p1{background:var(--dulce);color:#fff}.p2{background:var(--clasico)}.p3{background:var(--chili)}.ya{background:var(--pimienta)}
+.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:36px}
+.spec{border-top:3px solid var(--tinta);padding-top:10px}
+.spec b{text-transform:uppercase;font-stretch:115%;font-weight:900}
+.spec ul{padding-left:1.1em;margin:8px 0 0;font-size:.95rem}
+@media (max-width:820px){.specs{grid-template-columns:1fr}}
+
+@media (prefers-reduced-motion:reduce){.ticker .row{animation:none}}
+</style>
+
+<!-- Barra fija del boceto -->
+<div class="barra wrap" role="region" aria-label="Controles del boceto">
+  <span><b>BOCETO</b> <span class="t-largo">Kichar Snack · mapa de movimiento · Harvi × Chiare Studio</span></span>
+  <span class="acc">
+    <button id="btn-notas" type="button" aria-pressed="true">Notas técnicas</button>
+    <a href="#materiales">Materiales</a>
+  </span>
+</div>
+
+<!-- Ticker = banner promocional administrable -->
+<div class="ticker" aria-label="Banner promocional">
+  <div class="row"><span>Nuevo: sabor Pimienta Negra</span><span>Envíos a todo el país</span><span>Carne posta, versión snack</span><span>50% proteína</span></div><div class="row" aria-hidden="true"><span>Nuevo: sabor Pimienta Negra</span><span>Envíos a todo el país</span><span>Carne posta, versión snack</span><span>50% proteína</span></div>
+</div>
+
+<!-- ============ 1. HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="fondo capa" data-vel="0.1"></div>
+  <div class="marca capa" data-vel="-0.25">
+    <div class="disp">Kichar</div>
+    <small>SNACK</small>
+  </div>
+  <svg class="aro capa" viewBox="0 0 800 300" fill="none" aria-hidden="true"><path class="trazo" d="M60 190 C 40 110, 260 50, 430 52 C 640 54, 770 110, 748 170 C 726 236, 520 270, 360 266 C 190 262, 70 240, 60 190 C 54 160, 110 120, 200 98" stroke="#141210" stroke-width="9" stroke-linecap="round"/></svg>
+  <img class="pouch capa" src="img/pouch-clasico.webp" alt="Paquete Kichar sabor Clásico">
+  <div class="claim c1 capa">50% proteína<small>por paquete</small></div>
+  <div class="claim c2 capa">Cero azúcar</div>
+
+  <img class="capa t4" src="img/trozo-4.webp" alt="" data-fg>
+  <img class="capa t2" src="img/trozo-3.webp" alt="" data-fg>
+  <svg class="capa d-numeral" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M38 10 L28 92 M68 8 L58 90 M12 36 L90 30 M8 66 L86 60" stroke="#141210" stroke-width="7" stroke-linecap="round"/></svg>
+  <svg class="capa d-estrella" viewBox="0 0 120 120" fill="none" aria-hidden="true"><path d="M60 8 L70 44 L110 34 L80 62 L106 98 L66 80 L50 114 L44 76 L8 84 L36 56 L14 22 L50 38 Z" stroke="#141210" stroke-width="5" stroke-linejoin="round"/></svg>
+  <svg class="capa d-garabato" viewBox="0 0 160 70" fill="none" aria-hidden="true"><path d="M6 56 C 30 52, 34 14, 22 16 C 8 18, 20 60, 52 54 C 76 50, 74 12, 62 14 C 48 16, 60 58, 92 52 C 116 48, 114 10, 102 12 C 88 14, 100 58, 152 46" stroke="#FF7A1F" stroke-width="8" stroke-linecap="round"/></svg>
+  <img class="capa t1" src="img/trozo-1.webp" alt="" data-fg>
+  <img class="capa t3" src="img/trozo-5.webp" alt="" data-fg>
+  <div class="slogan pill">Carne posta, versión snack</div>
+
+  <aside class="nota">
+    <h4>01 · Inicio</h4>
+    <dl>
+      <dt>Efecto</dt><dd>Sección <b>pineada</b> + <b>parallax de 5 capas</b>. Fondo y logo lentos, paquete a velocidad media, trozos de carne y garabatos rápidos, girando y pasando por delante del texto.</dd>
+      <dt>Técnica</dt><dd>GSAP ScrollTrigger (<code>pin</code> + <code>scrub</code>), Lenis para suavizar. Desenfoque en capas cercanas = profundidad.</dd>
+      <dt>Material</dt><dd><ul>
+        <li><span class="tag ok">tenemos</span>Pouch recortado</li>
+        <li><span class="tag falta">falta</span>8–10 trozos de carne <b>sueltos</b> y recortados</li>
+        <li><span class="tag falta">falta</span>Garabatos de marca en SVG</li>
+        <li><span class="tag falta">falta</span>Logo KICHAR en SVG</li></ul></dd>
+    </dl>
+  </aside>
+</section>
+
+<!-- ============ 2. CONOCÉ KICHAR ============ -->
+<section class="conoce wrap" id="conoce">
+  <div class="grid">
+    <div>
+      <span class="pill" style="--c:var(--pimienta)">Conocé Kichar</span>
+      <h2 class="disp split" style="margin-top:18px">Carne posta, versión snack</h2>
+      <p class="lead" style="margin-top:22px">Durante generaciones, la carne deshidratada fue la forma de conservar los alimentos. Recuperamos esa idea y la llevamos al presente: un snack cárnico para una vida activa.</p>
+      <div class="pasos">
+        <div class="paso"><b>Carne de pastura</b><span>Cortes magros, sin rellenos.</span></div>
+        <div class="paso"><b>Sidra + sal</b><span>Vinagre de manzana y sal. Nada más.</span></div>
+        <div class="paso"><b>Secado lento</b><span>Deshidratado sin azúcar ni conservantes.</span></div>
+      </div>
+    </div>
+    <div class="pila">
+      <svg viewBox="0 0 600 360" fill="none" aria-hidden="true"><path class="dibujar" d="M40 230 C 20 140, 200 60, 340 64 C 500 68, 590 140, 566 210 C 540 290, 360 320, 240 312 C 120 304, 44 280, 40 230 C 38 200, 80 160, 150 132" stroke="#141210" stroke-width="7" stroke-linecap="round"/></svg>
+      <img src="img/pila.webp" alt="Pila de carne deshidratada Kichar" style="position:relative">
+    </div>
+  </div>
+  <aside class="nota">
+    <h4>02 · Conocé Kichar</h4>
+    <dl>
+      <dt>Efecto</dt><dd>El título se <b>revela palabra por palabra</b> con el scroll y el óvalo de la marca <b>se dibuja</b> alrededor de la carne.</dd>
+      <dt>Técnica</dt><dd>GSAP SplitText + trazo SVG animado (<code>stroke-dashoffset</code> / DrawSVG).</dd>
+      <dt>Material</dt><dd><ul>
+        <li><span class="tag falta">falta</span>Óvalo y flechas como <b>trazo</b> SVG (sin expandir)</li>
+        <li><span class="tag falta">falta</span>Fotos de proceso / ingredientes (opcional)</li></ul></dd>
+    </dl>
+  </aside>
+</section>
+
+<!-- ============ 3. PRODUCTOS ============ -->
+<section class="productos" id="productos">
+  <div class="cab wrap"><h2 class="disp">Nuestros sabores</h2></div>
+  <div class="pista">
+    <article class="panel" data-color="#F8AA1F">
+      <img src="img/pouch-clasico.webp" alt="Kichar Clásico">
+      <div><h3 class="disp">Clásico</h3><p>El original: carne, vinagre de sidra y sal. El punto de partida.</p><div class="meta"><span class="chip">30 g</span><span class="chip">50% proteína</span></div></div>
+    </article>
+    <article class="panel" data-color="#93C3EE">
+      <img src="img/pouch-ajo.webp" alt="Kichar Ajo">
+      <div><h3 class="disp">Ajo</h3><p>Sabor intenso a ajo, para los que van de frente.</p><div class="meta"><span class="chip">30 g</span><span class="chip">Cero azúcar</span></div></div>
+    </article>
+    <article class="panel" data-color="#7FD8A9">
+      <img src="img/pouch-pimienta.webp" alt="Kichar Pimienta Negra">
+      <div><h3 class="disp">Pimienta negra</h3><p>Pimienta molida gruesa. Picor seco, aroma fuerte.</p><div class="meta"><span class="chip">30 g</span><span class="chip">Gluten free</span></div></div>
+    </article>
+    <article class="panel" data-color="#FF7A1F">
+      <img src="img/pouch-picante.webp" alt="Kichar Picante">
+      <div><h3 class="disp">Picante</h3><p>Para arrancar el día con calor.</p><div class="meta"><span class="chip">30 g</span><span class="chip">50% proteína</span></div></div>
+    </article>
+    <article class="panel" data-color="#F2504B">
+      <img src="img/pouch-dulce-picante.webp" alt="Kichar Dulce Picante">
+      <div><h3 class="disp">Dulce picante</h3><p>Un toque dulce y un final que pica.</p><div class="meta"><span class="chip">30 g</span><span class="chip">Snack natural</span></div></div>
+    </article>
+    <article class="panel" data-color="#B7A3EE">
+      <img src="img/pouch-hot-chili.webp" alt="Kichar Hot Chili">
+      <div><h3 class="disp">Hot chili</h3><p>El más picante de la línea.</p><div class="meta"><span class="chip">30 g</span><span class="chip">Cero azúcar</span></div></div>
+    </article>
+  </div>
+  <aside class="nota">
+    <h4>03 · Productos</h4>
+    <dl>
+      <dt>Efecto</dt><dd>La sección queda fija y los sabores <b>pasan en horizontal</b>. El fondo cambia al color de cada sabor y cada paquete gira al entrar. En celular: carrusel con deslizamiento.</dd>
+      <dt>Técnica</dt><dd>ScrollTrigger <code>pin</code> + <code>containerAnimation</code>. Datos desde el panel (hasta 7 productos).</dd>
+      <dt>Material</dt><dd><ul>
+        <li><span class="tag ok">tenemos</span>6 pouches de frente</li>
+        <li><span class="tag falta">falta</span>Dorso de cada pouch (giro 3D opcional)</li>
+        <li><span class="tag falta">falta</span>Ingrediente recortado por sabor (ajo, pimienta, chile)</li>
+        <li><span class="tag falta">falta</span>HEX oficial de cada sabor</li></ul></dd>
+    </dl>
+  </aside>
+</section>
+
+<!-- ============ 4. POR QUÉ ============ -->
+<section class="porque" id="porque">
+  <div class="wrap">
+    <div style="max-width:1200px;margin:0 auto">
+      <span class="pill" style="--c:var(--ajo)">¿Por qué Kichar?</span>
+      <h2 class="disp" style="margin-top:18px">Pocos ingredientes.<br>Mucha proteína.</h2>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="sello" style="--c:var(--clasico)">Por<br>paquete</div><div class="n"><span class="cnt" data-to="50">50</span>%</div><b>Proteína</b><span>Saciedad real entre comidas.</span></div>
+      <div class="stat"><div class="sello" style="--c:var(--pimienta)">Sin<br>vueltas</div><div class="n"><span class="cnt" data-to="0">0</span> g</div><b>Azúcar</b><span>Cero azúcar agregada.</span></div>
+      <div class="stat"><div class="sello" style="--c:var(--picante)">Por<br>paquete</div><div class="n"><span class="cnt" data-to="286">286</span></div><b>Calorías</b><span>Energía para moverte.</span></div>
+      <div class="stat"><div class="sello" style="--c:var(--ajo)">Apto</div><div class="n">GF</div><b>Gluten free</b><span>Carne, sidra y sal.</span></div>
+    </div>
+  </div>
+  <div class="cintas" aria-hidden="true">
+    <div class="cinta a"><div class="in">Sin azúcar ✦ Gluten free ✦ 50% proteína ✦ Snack natural ✦ Sin azúcar ✦ Gluten free ✦ 50% proteína ✦ Snack natural ✦</div></div>
+    <div class="cinta b"><div class="in">Carne posta ✦ Versión snack ✦ Carne posta ✦ Versión snack ✦ Carne posta ✦ Versión snack ✦ Carne posta ✦</div></div>
+  </div>
+  <aside class="nota">
+    <h4>04 · Por qué Kichar</h4>
+    <dl>
+      <dt>Efecto</dt><dd><b>Contadores</b> que suben al entrar, <b>sellos</b> que giran y dos <b>cintas cruzadas</b> que corren en sentidos opuestos según el scroll.</dd>
+      <dt>Técnica</dt><dd>GSAP tween de números + <code>xPercent</code> con <code>scrub</code>.</dd>
+      <dt>Material</dt><dd><ul>
+        <li><span class="tag falta">falta</span>Sellos / stickers de atributos en SVG</li>
+        <li><span class="tag falta">falta</span>Tabla nutricional <b>validada</b> (el mockup repite valores de ejemplo)</li></ul></dd>
+    </dl>
+  </aside>
+</section>
+
+<!-- ============ 5. DÍA A DÍA ============ -->
+<section class="dia wrap" id="dia">
+  <div style="max-width:980px;margin:0 auto">
+    <span class="pill" style="--c:var(--chili)">Kichar en tu día a día</span>
+    <h2 class="disp" style="margin-top:18px">Va donde vas</h2>
+  </div>
+  <div class="mazo">
+    <div class="carta" style="--i:0;--c:var(--clasico)"><div class="foto"><em>FOTO · Gym: persona abriendo el paquete después de entrenar · vertical 4:5 + horizontal 16:9</em></div><div class="rotulo"><span class="disp">Entrenamiento</span><img class="mini" src="img/pouch-clasico.webp" alt=""></div></div>
+    <div class="carta" style="--i:1;--c:var(--ajo)"><div class="foto"><em>FOTO · Escritorio / oficina, paquete junto a la notebook</em></div><div class="rotulo"><span class="disp">Trabajo</span><img class="mini" src="img/pouch-ajo.webp" alt=""></div></div>
+    <div class="carta" style="--i:2;--c:var(--pimienta)"><div class="foto"><em>FOTO · Ruta / auto / mochila de viaje</em></div><div class="rotulo"><span class="disp">Viajes</span><img class="mini" src="img/pouch-pimienta.webp" alt=""></div></div>
+    <div class="carta" style="--i:3;--c:var(--picante)"><div class="foto"><em>FOTO · Trekking, bici o pesca al aire libre</em></div><div class="rotulo"><span class="disp">Aire libre</span><img class="mini" src="img/pouch-picante.webp" alt=""></div></div>
+  </div>
+  <aside class="nota">
+    <h4>05 · Día a día</h4>
+    <dl>
+      <dt>Efecto</dt><dd><b>Cartas que se apilan</b>: cada escena queda fija y la siguiente se le monta encima. La foto se mueve dentro de su marco (parallax interno).</dd>
+      <dt>Técnica</dt><dd>CSS <code>position: sticky</code> + GSAP para escala, giro y desplazamiento de la imagen.</dd>
+      <dt>Material</dt><dd><ul>
+        <li><span class="tag falta">falta</span>Sesión de fotos lifestyle: 4–5 escenas, versión vertical y horizontal</li>
+        <li><span class="tag falta">falta</span>Opcional: clips de video cortos (5–8 s) en loop</li></ul></dd>
+    </dl>
+  </aside>
+</section>
+
+<!-- ============ 6. DISTRIBUIDORES ============ -->
+<section class="distri wrap" id="distribuidores">
+  <div class="grid">
+    <div class="abanico" aria-hidden="true">
+      <img src="img/pouch-hot-chili.webp" alt=""><img src="img/pouch-dulce-picante.webp" alt=""><img src="img/pouch-picante.webp" alt=""><img src="img/pouch-pimienta.webp" alt=""><img src="img/pouch-ajo.webp" alt=""><img src="img/pouch-clasico.webp" alt="">
+    </div>
+    <div>
+      <span class="pill" style="--c:var(--clasico);color:var(--tinta)">Distribuidores y puntos de venta</span>
+      <h2 class="disp" style="margin-top:18px">Llevá Kichar a tu góndola</h2>
+      <p class="lead" style="margin-top:16px">Gimnasios, almacenes, dietéticas, kioscos y distribuidores. Dejanos tus datos y te enviamos la propuesta comercial.</p>
+      <form id="form-distri" novalidate>
+        <label for="f-nombre">Nombre o comercio<input id="f-nombre" name="nombre" required autocomplete="organization" value="Dietética El Molino"></label>
+        <label for="f-tipo">Tipo de negocio<select id="f-tipo" name="tipo"><option>Gimnasio</option><option selected>Dietética</option><option>Almacén / kiosco</option><option>Distribuidor</option></select></label>
+        <label for="f-ciudad">Ciudad<input id="f-ciudad" name="ciudad" autocomplete="address-level2" value="Rafaela, Santa Fe"></label>
+        <button class="btn" type="submit">Quiero ser punto de venta</button>
+        <span class="ok-msg" id="ok-msg" role="status"></span>
+      </form>
+    </div>
+  </div>
+  <aside class="nota">
+    <h4>06 · Distribuidores</h4>
+    <dl>
+      <dt>Efecto</dt><dd>Los 6 paquetes se <b>abren en abanico</b> al entrar. Es la sección más calma: lo importante es el formulario.</dd>
+      <dt>Técnica</dt><dd>GSAP <code>rotation</code> con <code>stagger</code> y <code>scrub</code>.</dd>
+      <dt>Material</dt><dd><ul>
+        <li><span class="tag ok">tenemos</span>Pouches</li>
+        <li><span class="tag falta">falta</span>Foto de caja master / exhibidor (opcional)</li></ul></dd>
+    </dl>
+  </aside>
+</section>
+
+<!-- ============ 7. CONTACTO ============ -->
+<footer class="pie wrap" id="contacto">
+  <div class="redes"><span>Instagram</span><span>WhatsApp</span><span>Contacto</span><span>kicharsnack.com.ar</span></div>
+  <div class="gigante disp" aria-label="Kichar"><span>K</span><span>I</span><span>C</span><span>H</span><span>A</span><span>R</span></div>
+  <aside class="nota">
+    <h4>07 · Contacto</h4>
+    <dl>
+      <dt>Efecto</dt><dd>Cierre con el <b>logo gigante</b>: cada letra sube a distinta velocidad hasta quedar armado.</dd>
+      <dt>Técnica</dt><dd>Letras separadas + <code>stagger</code> con <code>scrub</code>.</dd>
+      <dt>Material</dt><dd><ul><li><span class="tag falta">falta</span>Logo en SVG con letras como trazados separados</li></ul></dd>
+    </dl>
+  </aside>
+</footer>
+
+<!-- ============ MATERIALES ============ -->
+<section class="doc wrap" id="materiales">
+  <div class="in">
+    <span class="pill" style="--c:var(--clasico)">Para Chiare Studio</span>
+    <h2 class="disp" style="margin-top:18px">Materiales que necesitamos</h2>
+    <p class="lead" style="max-width:60ch;margin-top:18px">El movimiento depende de tener cada elemento <b>en una capa separada</b>. Una foto plana no se puede mover por partes; un trozo de carne recortado sí. Los trozos de este boceto salen de recortar la foto de la pila y por eso se ven toscos. Las descripciones de sabores, el banner y las fotos marcadas con rayas son de ejemplo.</p>
+
+    <div class="tabla">
+      <table>
+        <thead><tr><th>Material</th><th>Para qué sección</th><th>Formato</th><th>Prioridad</th></tr></thead>
+        <tbody>
+          <tr><td>Pouches de frente (6 sabores)</td><td>Inicio, Productos, Día a día, Distribuidores</td><td>PNG transparente, ya recibido</td><td><span class="prio ya">Ya tenemos</span></td></tr>
+          <tr><td>Logo KICHAR</td><td>Inicio, Contacto</td><td>SVG vectorial, cada letra como trazado separado + versión completa</td><td><span class="prio p1">Imprescindible</span></td></tr>
+          <tr><td>Trozos de carne sueltos</td><td>Inicio (primer plano), Productos</td><td>8–10 piezas fotografiadas de a una, PNG transparente ≥ 2000 px, ángulos variados</td><td><span class="prio p1">Imprescindible</span></td></tr>
+          <tr><td>Garabatos de marca (espiral, estrella, numeral, flechas, óvalo)</td><td>Todas</td><td>SVG con <b>trazos abiertos</b> (sin expandir contorno) para poder dibujarlos en pantalla</td><td><span class="prio p1">Imprescindible</span></td></tr>
+          <tr><td>Paleta oficial</td><td>Productos (fondo por sabor), todo el sitio</td><td>HEX de cada sabor + neutros, tipografías con licencia web</td><td><span class="prio p1">Imprescindible</span></td></tr>
+          <tr><td>Tabla nutricional validada</td><td>Por qué Kichar, ficha de producto</td><td>Texto o planilla con valores reales por sabor</td><td><span class="prio p1">Imprescindible</span></td></tr>
+          <tr><td>Fotos lifestyle</td><td>Día a día</td><td>4–5 escenas, cada una en vertical 4:5 y horizontal 16:9, ≥ 2400 px</td><td><span class="prio p2">Deseable</span></td></tr>
+          <tr><td>Ingrediente por sabor (ajo, pimienta, chile, etc.)</td><td>Productos</td><td>PNG transparente</td><td><span class="prio p2">Deseable</span></td></tr>
+          <tr><td>Sellos / stickers de atributos</td><td>Por qué Kichar</td><td>SVG</td><td><span class="prio p2">Deseable</span></td></tr>
+          <tr><td>Dorso de los pouches</td><td>Productos (giro del paquete)</td><td>PNG transparente, mismo encuadre que el frente</td><td><span class="prio p3">Upgrade</span></td></tr>
+          <tr><td>Clips de video cortos</td><td>Día a día, Inicio</td><td>MP4 5–8 s, sin audio, loopeable</td><td><span class="prio p3">Upgrade</span></td></tr>
+          <tr><td>Modelo 3D del pouch</td><td>Inicio (paquete girando en 3D)</td><td>.glb / .gltf, o archivo de Spline</td><td><span class="prio p3">Upgrade</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="specs">
+      <div class="spec"><b>Para la sesión de fotos</b><ul><li>Fondo liso de color uniforme, que facilite el recorte.</li><li>Misma luz en todas las piezas, desde el mismo lado.</li><li>Trozos fotografiados de a uno, de frente, en 3/4 y de perfil.</li><li>Algunas tomas cenitales del paquete abierto.</li></ul></div>
+      <div class="spec"><b>Para los archivos vectoriales</b><ul><li>Un archivo por elemento, con nombre claro (<code>garabato-espiral.svg</code>).</li><li>Trazos como <i>stroke</i>, no como relleno.</li><li>Sin textos convertidos a curvas, salvo el logo.</li></ul></div>
+      <div class="spec"><b>Entrega</b><ul><li>Carpeta compartida con subcarpetas: <code>logo/</code>, <code>producto/</code>, <code>carne/</code>, <code>garabatos/</code>, <code>fotos/</code>.</li><li>Nosotros optimizamos a WebP para la web; ustedes entregan la máxima resolución.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  // Toggle de notas
+  var btn=document.getElementById('btn-notas');
+  btn.addEventListener('click',function(){
+    var on=btn.getAttribute('aria-pressed')==='true';
+    btn.setAttribute('aria-pressed',String(!on));
+    document.body.classList.toggle('sin-notas',on);
+    if(window.ScrollTrigger) ScrollTrigger.refresh();
+  });
+  // Formulario de ejemplo
+  document.getElementById('form-distri').addEventListener('submit',function(e){
+    e.preventDefault();
+    document.getElementById('ok-msg').textContent='Ejemplo: en el sitio real esto envía la consulta por email y al panel.';
+  });
+
+  if(!window.gsap||!window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+
+  // Scroll suave
+  if(window.Lenis){
+    try{
+      var lenis=new Lenis({lerp:0.1});
+      lenis.on('scroll',ScrollTrigger.update);
+      gsap.ticker.add(function(t){lenis.raf(t*1000)});
+      gsap.ticker.lagSmoothing(0);
+      document.querySelectorAll('a[href^="#"]').forEach(function(a){
+        a.addEventListener('click',function(e){var el=document.querySelector(a.getAttribute('href'));if(el){e.preventDefault();lenis.scrollTo(el,{offset:0});}});
+      });
+    }catch(e){}
+  }
+
+  var mm=gsap.matchMedia();
+
+  // ---------- 1. HERO: pin + parallax multicapa ----------
+  mm.add({desk:'(min-width: 821px)',mob:'(max-width: 820px)'},function(ctx){
+    var desk=ctx.conditions.desk;
+    var tl=gsap.timeline({scrollTrigger:{trigger:'.hero',start:'top top',end:desk?'+=150%':'+=80%',scrub:1,pin:true}});
+    tl.to('.hero .fondo',{yPercent:-30,ease:'none'},0)
+      .to('.hero .marca',{yPercent:-55,scale:.9,ease:'none'},0)
+      .to('.hero .aro',{rotation:-18,scale:1.15,ease:'none'},0)
+      .to('.hero .pouch',{yPercent:-28,rotation:8,scale:1.08,ease:'none'},0)
+      .to('.hero .c1',{x:-80,y:-140,ease:'none'},0)
+      .to('.hero .c2',{x:80,y:-160,ease:'none'},0)
+      .to('.t1',{y:-520,x:120,rotation:140,ease:'none'},0)
+      .to('.t2',{y:-380,x:-80,rotation:-110,ease:'none'},0)
+      .to('.t3',{y:-700,x:-160,rotation:200,ease:'none'},0)
+      .to('.t4',{y:-260,x:60,rotation:70,ease:'none'},0)
+      .to('.d-estrella',{y:-300,rotation:240,ease:'none'},0)
+      .to('.d-garabato',{y:-420,x:80,rotation:-30,ease:'none'},0)
+      .to('.d-numeral',{y:-260,rotation:60,ease:'none'},0)
+      .to('.hero .slogan',{yPercent:-180,scale:1.1,ease:'none'},0);
+    // Movimiento leve con el mouse (solo escritorio)
+    if(desk){
+      var hero=document.querySelector('.hero');
+      var qs=[['.pouch',14],['.aro',6],['.t1',40],['.t2',30],['.t3',45],['.t4',22],['.d-estrella',26],['.d-garabato',30]].map(function(p){
+        return {x:gsap.quickTo('.hero '+p[0],'xPercent',{duration:.8,ease:'power3'}),f:p[1]};
+      });
+      var mv=function(e){var r=hero.getBoundingClientRect();var nx=(e.clientX-r.left)/r.width-.5;qs.forEach(function(q){q.x(nx*q.f*-.6)});};
+      hero.addEventListener('pointermove',mv);
+      return function(){hero.removeEventListener('pointermove',mv)};
+    }
+  });
+
+  // ---------- 2. CONOCÉ: texto palabra por palabra + trazo dibujado ----------
+  var h=document.querySelector('.conoce .split');
+  h.innerHTML=h.textContent.split(' ').map(function(w){return '<span class="w">'+w+'</span>'}).join(' ');
+  gsap.to('.conoce .split .w',{opacity:1,stagger:.3,ease:'none',scrollTrigger:{trigger:'.conoce',start:'top 75%',end:'top 20%',scrub:true}});
+  var p=document.querySelector('.conoce .dibujar'),L=p.getTotalLength();
+  gsap.set(p,{strokeDasharray:L,strokeDashoffset:L*0.15});
+  gsap.fromTo(p,{strokeDashoffset:L},{strokeDashoffset:0,ease:'none',scrollTrigger:{trigger:'.conoce .pila',start:'top 85%',end:'center 45%',scrub:true}});
+  gsap.fromTo('.conoce .pila img',{yPercent:12,rotation:-4},{yPercent:-8,rotation:2,ease:'none',scrollTrigger:{trigger:'.conoce',start:'top bottom',end:'bottom top',scrub:true}});
+
+  // ---------- 3. PRODUCTOS: scroll horizontal + color por sabor ----------
+  mm.add('(min-width: 821px)',function(){
+    var pista=document.querySelector('.pista'),panels=gsap.utils.toArray('.panel');
+    var dist=function(){return pista.scrollWidth-window.innerWidth};
+    var hz=gsap.to(pista,{x:function(){return -dist()},ease:'none',scrollTrigger:{trigger:'.productos',start:'top top',end:function(){return '+='+dist()},scrub:1,pin:true,invalidateOnRefresh:true}});
+    var cols=panels.map(function(el){return el.dataset.color});
+    var bg=gsap.timeline({scrollTrigger:{trigger:'.productos',start:'top top',end:function(){return '+='+dist()},scrub:true}});
+    cols.slice(1).forEach(function(c){bg.to('.productos',{backgroundColor:c,ease:'none',duration:1})});
+    panels.forEach(function(el){
+      gsap.fromTo(el.querySelector('img'),{rotation:-14,yPercent:10,scale:.9},{rotation:10,yPercent:-6,scale:1,ease:'none',
+        scrollTrigger:{trigger:el,containerAnimation:hz,start:'left right',end:'right left',scrub:true}});
+    });
+  });
+
+  // ---------- 4. POR QUÉ: contadores, sellos, cintas ----------
+  document.querySelectorAll('.cnt').forEach(function(el){
+    var to=+el.dataset.to;if(!to) return;
+    var o={v:0};
+    ScrollTrigger.create({trigger:el,start:'top 85%',once:true,onEnter:function(){
+      gsap.fromTo(o,{v:0},{v:to,duration:1.6,ease:'power2.out',onUpdate:function(){el.textContent=Math.round(o.v)}});
+    }});
+  });
+  gsap.fromTo('.sello',{rotation:-60,scale:.6},{rotation:12,scale:1,stagger:.1,ease:'back.out(2)',scrollTrigger:{trigger:'.stats',start:'top 85%',end:'top 45%',scrub:true}});
+  gsap.fromTo('.cinta.a .in',{xPercent:0},{xPercent:-35,ease:'none',scrollTrigger:{trigger:'.cintas',start:'top bottom',end:'bottom top',scrub:true}});
+  gsap.fromTo('.cinta.b .in',{xPercent:-35},{xPercent:0,ease:'none',scrollTrigger:{trigger:'.cintas',start:'top bottom',end:'bottom top',scrub:true}});
+
+  // ---------- 5. DÍA A DÍA: cartas apiladas ----------
+  var cartas=gsap.utils.toArray('.carta');
+  cartas.forEach(function(c,i){
+    gsap.fromTo(c.querySelector('.foto'),{yPercent:-8},{yPercent:8,ease:'none',scrollTrigger:{trigger:c,start:'top bottom',end:'bottom top',scrub:true}});
+    if(i<cartas.length-1){
+      gsap.to(c,{scale:.92,rotation:i%2?2:-2,filter:'brightness(.85)',ease:'none',scrollTrigger:{trigger:cartas[i+1],start:'top bottom',end:'top 30%',scrub:true}});
+    }
+  });
+
+  // ---------- 6. DISTRIBUIDORES: abanico ----------
+  var fan=gsap.utils.toArray('.abanico img');
+  gsap.fromTo(fan,{rotation:0},{rotation:function(i){return (i-(fan.length-1)/2)*14},x:function(i){return (i-(fan.length-1)/2)*18},ease:'none',
+    scrollTrigger:{trigger:'.distri',start:'top 80%',end:'center 55%',scrub:true}});
+
+  // ---------- 7. CONTACTO: letras del logo ----------
+  gsap.fromTo('.gigante span',{yPercent:function(i){return 60+i*25}},{yPercent:0,ease:'none',
+    scrollTrigger:{trigger:'.pie',start:'top 85%',end:'bottom bottom',scrub:true}});
+
+  window.addEventListener('load',function(){ScrollTrigger.refresh()});
+})();
+</script>
+
+</body></html>
