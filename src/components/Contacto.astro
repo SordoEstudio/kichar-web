@@ -6,13 +6,16 @@
   </div>
   <p class="tagline">Carne posta, versión snack.</p>
   <div class="redes">
-    <span>Instagram</span>
-    <span>WhatsApp</span>
-    <span>Contacto</span>
-    <span>kicharsnack.com.ar</span>
+    <span data-handle="@kichar.snack">Instagram</span>
+    <span data-handle="+54 9 XXX XXX XXXX">WhatsApp</span>
+    <span data-handle="hola@kicharsnack.com.ar">Contacto</span>
+    <span data-handle="kicharsnack.com.ar">Web</span>
   </div>
-  <div class="gigante disp" aria-label="Kichar">
-    <span>K</span><span>I</span><span>C</span><span>H</span><span>A</span><span>R</span>
+  <div class="logo-bottom">
+    <img src="/img/logo-light.png" alt="Kichar Snack" />
+  </div>
+  <div class="credits">
+    © 2026 Kichar Snack · Diseño <b>Chiare Estudio</b> · Desarrollo <b>Harvi Digital</b>
   </div>
 </footer>
 
@@ -21,7 +24,7 @@
   position: relative;
   background: var(--tinta);
   color: var(--crema);
-  padding-block: 100px 120px;
+  padding-block: 100px 60px;
   overflow: hidden;
   text-align: center;
 }
@@ -53,6 +56,7 @@
 }
 
 .pie .redes span {
+  position: relative;
   border: 2px solid var(--crema);
   border-radius: 999px;
   padding: 8px 16px;
@@ -61,16 +65,93 @@
   text-transform: uppercase;
   font-size: .85rem;
   cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+  overflow: visible;
 }
 
-.gigante {
+/* Tooltip handle */
+.pie .redes span::before {
+  content: attr(data-handle);
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: var(--crema);
+  color: var(--tinta);
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+  white-space: nowrap;
+  padding: 5px 12px;
+  border-radius: 20px;
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.8;
+  transition:
+    opacity .18s .04s,
+    scale .28s .04s cubic-bezier(.34,1.56,.64,1),
+    transform .28s .04s cubic-bezier(.34,1.56,.64,1);
+  z-index: 10;
+}
+
+.pie .redes span:hover::before {
+  opacity: 1;
+  scale: 1;
+  transform: translateX(-50%) translateY(0px);
+}
+
+/* Ripple onda */
+.pie .redes span::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pie .redes span:hover::after {
+  animation: onda .55s ease-out forwards;
+}
+
+@keyframes onda {
+  from { scale: 1;   opacity: .65; }
+  to   { scale: 1.6; opacity: 0;   }
+}
+
+/* Hover por red */
+.pie .redes span:nth-child(1):hover { background: var(--picante); color: var(--crema); border-color: var(--picante); }
+.pie .redes span:nth-child(2):hover { background: var(--pimienta); color: var(--tinta); border-color: var(--pimienta); }
+.pie .redes span:nth-child(3):hover { background: var(--dorado); color: var(--tinta); border-color: var(--dorado); }
+.pie .redes span:nth-child(4):hover { background: var(--ajo); color: var(--tinta); border-color: var(--ajo); }
+
+/* Logo grande al fondo */
+.logo-bottom {
+  margin-top: 70px;
   display: flex;
   justify-content: center;
-  margin-top: 40px;
-  font-size: clamp(3.4rem, 15vw, 15rem);
-  line-height: .85;
-  gap: .02em;
 }
 
-.gigante span { display: inline-block; }
+.logo-bottom img {
+  width: clamp(260px, 44vw, 640px);
+  height: auto;
+  opacity: .92;
+}
+
+/* Créditos */
+.credits {
+  font-family: var(--body);
+  font-size: 12px;
+  opacity: .45;
+  margin-top: 28px;
+  letter-spacing: .04em;
+}
+
+.credits b {
+  font-weight: 600;
+  opacity: .8;
+}
 </style>

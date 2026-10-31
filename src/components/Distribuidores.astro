@@ -9,14 +9,16 @@ const packs = [
 ];
 ---
 <section class="distri wrap" id="distribuidores">
+  <div class="distri-cab">
+    <span class="pill" style="--c:var(--dorado);color:var(--tinta)">Distribuidores y puntos de venta</span>
+    <h2 class="disp">Llevá Kichar<br />a tu góndola</h2>
+  </div>
   <div class="grid">
     <div class="abanico" aria-hidden="true">
       {packs.map((p) => <img src={p.src} alt={p.alt} />)}
     </div>
-    <div>
-      <span class="pill" style="--c:var(--dorado);color:var(--tinta)">Distribuidores y puntos de venta</span>
-      <h2 class="disp" style="margin-top:18px">Llevá Kichar<br />a tu góndola</h2>
-      <p class="lead" style="margin-top:16px">
+    <div class="distri-form">
+      <p class="lead">
         Gimnasios, almacenes, dietéticas, kioscos y distribuidores.
         Dejanos tus datos y te enviamos la propuesta comercial.
       </p>
@@ -62,8 +64,19 @@ const packs = [
   position: relative;
   background: var(--tinta);
   color: var(--crema);
-  padding-block: 120px;
+  padding-block: 100px 120px;
   overflow: hidden;
+}
+
+.distri-cab {
+  max-width: 1200px;
+  margin: 0 auto 64px;
+}
+
+.distri-cab h2 {
+  font-size: clamp(3rem, 6.5vw, 6rem);
+  margin-top: 18px;
+  line-height: 1;
 }
 
 .distri .grid {
@@ -133,6 +146,7 @@ input::placeholder { color: #ffffff55; }
   cursor: pointer;
   font-size: 1rem;
   margin-top: 4px;
+  transition: opacity .15s;
 }
 
 .btn:hover { opacity: .9; }
@@ -148,5 +162,6 @@ input::placeholder { color: #ffffff55; }
   .distri .grid { grid-template-columns: 1fr; }
   .abanico { height: 330px; }
   .abanico img { width: 150px; }
+  .distri-cab h2 { font-size: clamp(2.4rem, 8vw, 4rem); }
 }
 </style>
