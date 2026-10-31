@@ -62,7 +62,7 @@ if (reduce) {
     if (desk) {
       const hero = document.querySelector('.hero');
       const layers = [
-        ['.hero .pouch',  14], ['.hero .aro',  6],
+        ['.pouch',  14], ['.aro',  6],
         ['.t1', 40], ['.t2', 30], ['.t3', 45], ['.t4', 22],
         ['.d-estrella', 26], ['.d-garabato', 30],
       ].map(([sel, f]) => ({
@@ -165,7 +165,7 @@ if (reduce) {
   // ---------- 4. POR QUÉ: contadores + sellos + cintas ----------
   document.querySelectorAll('.cnt').forEach((el) => {
     const to = +el.dataset.to;
-    if (!to) return;
+    if (isNaN(to)) return;
     const o = { v: 0 };
     ScrollTrigger.create({
       trigger: el,
