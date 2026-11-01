@@ -114,6 +114,38 @@ if (reduce) {
       scrollTrigger: { trigger: '.conoce', start: 'top bottom', end: 'bottom top', scrub: true } }
   );
 
+  // Cursor parallax en .pila (desktop)
+  mm.add('(min-width: 821px)', () => {
+    const sec = document.querySelector('.conoce');
+    if (!sec) return;
+    const pila = sec.querySelector('.pila');
+    const pairs = [
+      [pila.querySelector('img'),      9],
+      [pila.querySelector('.flechas'), 3],
+      [pila.querySelector('.attr-1'),  13],
+      [pila.querySelector('.attr-2'),  13],
+      [pila.querySelector('.attr-3'),  7],
+      [pila.querySelector('.aro-svg'), 4],
+    ];
+    const qs = pairs
+      .filter(([el]) => el)
+      .map(([el, f]) => ({
+        x: gsap.quickTo(el, 'x', { duration: .9, ease: 'power3' }),
+        y: gsap.quickTo(el, 'y', { duration: .9, ease: 'power3' }),
+        f,
+      }));
+
+    const onMove = (e) => {
+      const r = sec.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width  - .5;
+      const ny = (e.clientY - r.top)  / r.height - .5;
+      qs.forEach((q) => { q.x(nx * q.f * -.7); q.y(ny * q.f * -.7); });
+    };
+
+    sec.addEventListener('pointermove', onMove);
+    return () => sec.removeEventListener('pointermove', onMove);
+  });
+
   // ---------- 3. PRODUCTOS: scroll horizontal + linger + color por sabor ----------
   mm.add('(min-width: 821px)', () => {
     const pista  = document.querySelector('.pista');
@@ -147,7 +179,9 @@ if (reduce) {
     cols.slice(1).forEach((c) => bg.to('.productos', { backgroundColor: c, ease: 'none', duration: 1 }));
 
     panels.forEach((el) => {
-      gsap.fromTo(el.querySelector('img'),
+      const img = el.querySelector('img');
+      if (!img) return;
+      gsap.fromTo(img,
         { rotation: -14, yPercent: 10, scale: .9 },
         { rotation: 10,  yPercent: -6, scale: 1,  ease: 'none',
           scrollTrigger: {
@@ -160,6 +194,7 @@ if (reduce) {
         }
       );
     });
+
   });
 
   // ---------- 4. POR QUÉ: contadores + sellos + cintas ----------
@@ -204,10 +239,11 @@ if (reduce) {
         scrollTrigger: { trigger: c, start: 'top bottom', end: 'bottom top', scrub: true } }
     );
     if (i < cartas.length - 1) {
-      gsap.to(c, {
-        scale: .92, rotation: i % 2 ? 2 : -2, filter: 'brightness(.85)', ease: 'none',
-        scrollTrigger: { trigger: cartas[i + 1], start: 'top bottom', end: 'top 30%', scrub: true },
-      });
+      gsap.fromTo(c,
+        { scale: 1, rotation: 0, filter: 'brightness(1)' },
+        { scale: .93, rotation: i % 2 ? 1.5 : -1.5, filter: 'brightness(.93)', ease: 'none',
+          scrollTrigger: { trigger: cartas[i + 1], start: 'top bottom', end: 'top 30%', scrub: true } }
+      );
     }
   });
 

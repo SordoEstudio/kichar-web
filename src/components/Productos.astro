@@ -61,6 +61,8 @@ const sabores = [
         </div>
       </article>
     ))}
+    <!-- Spacer: centra el último panel en el recorrido final -->
+    <div class="panel panel--spacer" data-color="#d8534f" aria-hidden="true"></div>
   </div>
 </section>
 
@@ -103,6 +105,12 @@ const sabores = [
 }
 
 .panel:first-child { margin-left: 6vw; }
+
+.panel--spacer {
+  width: max(calc((100vw - min(78vw, 900px)) / 2), 40px);
+  min-width: 40px;
+  pointer-events: none;
+}
 
 .panel img {
   width: clamp(200px, 24vw, 330px);

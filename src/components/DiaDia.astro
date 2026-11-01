@@ -4,17 +4,18 @@ const cartas = [
     i: 0, c: "var(--dorado)", titulo: "Entrenamiento",
     pack: "/img/pack-clasico.png", alt: "Clásico",
     fotos: [
-      { src: "https://picsum.photos/seed/gym01/400/300", slot: 1 },
-      { src: "https://picsum.photos/seed/gym02/400/300", slot: 2 },
-      { src: "https://picsum.photos/seed/gym03/400/300", slot: 3 },
+      { src: "https://picsum.photos/seed/gym01/500/380", slot: 1 },
+      { src: "https://picsum.photos/seed/gym02/500/380", slot: 2 },
+      { src: "https://picsum.photos/seed/gym03/500/380", slot: 3 },
     ],
   },
   {
     i: 1, c: "var(--ajo)", titulo: "Trabajo",
     pack: "/img/pack-ajo.png", alt: "Ajo",
     fotos: [
-      { src: "https://picsum.photos/seed/work01/400/300", slot: 1 },
-      { src: "https://picsum.photos/seed/work02/400/300", slot: 2 },
+      { src: "https://picsum.photos/seed/work01/500/380", slot: 1 },
+      { src: "https://picsum.photos/seed/work02/500/380", slot: 2 },
+      { src: "https://picsum.photos/seed/work03/500/380", slot: 3 },
     ],
     postit: "ABRÍ,\nPICÁ\nY SEGUÍ",
   },
@@ -22,26 +23,27 @@ const cartas = [
     i: 2, c: "var(--pimienta)", titulo: "Viajes",
     pack: "/img/pack-pimienta.png", alt: "Pimienta",
     fotos: [
-      { src: "https://picsum.photos/seed/travel01/400/300", slot: 1 },
-      { src: "https://picsum.photos/seed/travel02/400/300", slot: 2 },
-      { src: "https://picsum.photos/seed/travel03/400/300", slot: 3 },
+      { src: "https://picsum.photos/seed/travel01/500/380", slot: 1 },
+      { src: "https://picsum.photos/seed/travel02/500/380", slot: 2 },
+      { src: "https://picsum.photos/seed/travel03/500/380", slot: 3 },
     ],
   },
   {
     i: 3, c: "var(--picante)", titulo: "Aire libre",
     pack: "/img/pack-picante.png", alt: "Picante",
     fotos: [
-      { src: "https://picsum.photos/seed/nature01/400/300", slot: 1 },
-      { src: "https://picsum.photos/seed/nature02/400/300", slot: 2 },
+      { src: "https://picsum.photos/seed/nature01/500/380", slot: 1 },
+      { src: "https://picsum.photos/seed/nature02/500/380", slot: 2 },
+      { src: "https://picsum.photos/seed/nature03/500/380", slot: 3 },
     ],
     postit: "CARNE\nPOSTA",
   },
 ];
 ---
 <section class="dia wrap" id="dia">
-  <div style="max-width:980px;margin:0 auto">
+  <div class="dia-cab">
     <span class="pill" style="--c:var(--chili)">Kichar en tu día a día</span>
-    <h2 class="disp" style="margin-top:18px">Va donde vas</h2>
+    <h2 class="disp" style="margin-top:14px;font-size:clamp(2.2rem,4vw,3.2rem)">Va donde vas</h2>
   </div>
 
   <div class="mazo">
@@ -67,25 +69,50 @@ const cartas = [
 <style>
 .dia {
   position: relative;
-  padding-block: 120px 80px;
+  padding-block: 60px 80px;
+  background: var(--crema);
+}
+
+/* ---- Título sticky ---- */
+.dia-cab {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--crema);
+  padding-block: 20px 14px;
+  max-width: 980px;
+  margin: 0 auto;
 }
 
 .mazo {
   max-width: 980px;
-  margin: 48px auto 0;
+  margin: 32px auto 0;
   display: grid;
   gap: 40px;
 }
 
 .carta {
   position: sticky;
-  top: calc(80px + var(--i) * 18px);
+  top: calc(110px + var(--i) * 20px);
   height: min(62svh, 520px);
   border-radius: 22px;
   overflow: hidden;
   border: 3px solid var(--tinta);
   background: var(--c);
   transform-origin: 50% 0;
+}
+
+/* Cross-hatch texture */
+.carta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient( 45deg, rgba(0,0,0,.06) 0, rgba(0,0,0,.06) 1px, transparent 0, transparent 50%),
+    repeating-linear-gradient(-45deg, rgba(0,0,0,.06) 0, rgba(0,0,0,.06) 1px, transparent 0, transparent 50%);
+  background-size: 10px 10px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* ---- Fotos container ---- */
@@ -100,9 +127,9 @@ const cartas = [
 .polo {
   position: absolute;
   background: #fff;
-  padding: 8px 8px 26px;
-  box-shadow: 3px 6px 20px #00000040;
-  width: clamp(110px, 15vw, 190px);
+  padding: 10px 10px 30px;
+  box-shadow: 4px 8px 24px #00000045;
+  width: clamp(140px, 20vw, 260px);
 }
 
 .polo img {
@@ -112,15 +139,15 @@ const cartas = [
   display: block;
 }
 
-.polo-1 { top: 8%;  left: 5%;  rotate: -8deg;  z-index: 2; }
-.polo-2 { top: 4%;  right: 5%; rotate:  7deg;  z-index: 2; }
-.polo-3 { top: 32%; left: 30%; rotate: -4deg;  z-index: 3; }
+.polo-1 { top: 6%;  left: 2%;  rotate: -8deg;  z-index: 2; }
+.polo-2 { top: 4%;  right: 2%; rotate:  7deg;  z-index: 2; }
+.polo-3 { top: 36%; left: 24%; rotate: -4deg;  z-index: 3; }
 
 /* ---- Post-it ---- */
 .postit {
   position: absolute;
-  top: 22%;
-  right: 8%;
+  top: 20%;
+  right: 6%;
   background: #fef08a;
   padding: 12px 14px 14px;
   font-family: var(--mono);
@@ -159,8 +186,8 @@ const cartas = [
 }
 
 @media (max-width: 640px) {
-  .polo { width: 90px; }
-  .polo-3 { display: none; }
-  .postit { font-size: 0.55rem; max-width: 100px; }
+  .polo { width: 110px; padding: 8px 8px 24px; }
+  .polo-3 { left: 20%; top: 40%; }
+  .postit { font-size: 0.55rem; max-width: 100px; right: 4%; }
 }
 </style>

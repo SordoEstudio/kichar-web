@@ -16,23 +16,23 @@
           d="M40 230 C 20 140, 200 60, 340 64 C 500 68, 590 140, 566 210 C 540 290, 360 320, 240 312 C 120 304, 44 280, 40 230 C 38 200, 80 160, 150 132"
           stroke="#141210" stroke-width="7" stroke-linecap="round"/>
       </svg>
-      <img src="/img/pila.webp" alt="Pila de carne deshidratada Kichar" style="position:relative" />
+      <img src="/img/pila.webp" alt="Pila de carne deshidratada Kichar" />
 
-      <!-- flechas SVG de callouts → carne -->
-      <svg class="flechas" viewBox="0 0 560 460" fill="none" aria-hidden="true">
+      <svg class="flechas" viewBox="0 0 560 520" fill="none" aria-hidden="true">
         <defs>
-          <marker id="arr" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L9,3 z" fill="#141210"/>
+          <marker id="arr" markerWidth="14" markerHeight="14" refX="9" refY="7" orient="auto">
+            <path d="M1,1 L12,7 L1,13" fill="none" stroke="#141210" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
           </marker>
         </defs>
         <!-- attr-1 top-left → carne -->
-        <path d="M 155 72 C 190 125, 225 175, 245 218"
+        <path d="M 152 88 C 182 138, 218 184, 240 224"
           stroke="#141210" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/>
         <!-- attr-2 top-right → carne -->
-        <path d="M 405 72 C 370 125, 335 175, 315 218"
+        <path d="M 408 88 C 378 138, 342 184, 320 224"
           stroke="#141210" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/>
         <!-- attr-3 bottom → carne -->
-        <path d="M 280 396 C 280 366, 280 320, 280 290"
+        <path d="M 280 440 C 280 408, 280 362, 280 304"
           stroke="#141210" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/>
       </svg>
 
@@ -75,15 +75,16 @@
 
 .conoce .pila {
   position: relative;
-  height: 460px;
+  height: 520px;
 }
 
 .conoce .pila img {
   position: absolute;
-  width: 58%;
+  width: 60%;
   left: 50%;
   top: 50%;
   translate: -50% -50%;
+  will-change: transform;
 }
 
 .aro-svg {
@@ -108,8 +109,9 @@
   border: 2.5px solid var(--tinta);
   border-radius: 8px;
   padding: 10px 14px;
-  max-width: 150px;
+  max-width: 148px;
   z-index: 5;
+  will-change: transform;
 }
 
 .attr b {
@@ -138,5 +140,6 @@
   .attr { max-width: 120px; }
   .attr b { font-size: .8rem; }
   .attr span { font-size: .7rem; }
+  .flechas { opacity: .7; }
 }
 </style>
