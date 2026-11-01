@@ -121,8 +121,7 @@ if (reduce) {
     const pila = sec.querySelector('.pila');
     const pairs = [
       [pila.querySelector('img'),      9],
-      [pila.querySelector('.flechas'), 3],
-      [pila.querySelector('.attr-1'),  13],
+[pila.querySelector('.attr-1'),  13],
       [pila.querySelector('.attr-2'),  13],
       [pila.querySelector('.attr-3'),  7],
       [pila.querySelector('.aro-svg'), 4],
