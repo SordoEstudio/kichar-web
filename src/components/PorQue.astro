@@ -65,16 +65,23 @@ const stats = [
   font-family: var(--display);
   font-weight: 400;
   font-size: clamp(5.5rem, 10vw, 13rem);
-  line-height: .85;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
-  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: .04em;
+}
+
+/* .cnt hereda tamaño de .n; .stat span no debe pisarlo */
+.stat .cnt {
+  font-size: inherit;
+  color: inherit;
 }
 
 .stat .unit {
-  font-size: .36em;
-  vertical-align: top;
-  line-height: 1.4;
-  padding-left: .04em;
+  font-size: .28em;
+  line-height: 1.8;
+  padding-top: .08em;
 }
 
 .stat .unit-main {

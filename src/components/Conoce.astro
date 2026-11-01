@@ -21,19 +21,24 @@
       <svg class="flechas" viewBox="0 0 560 520" fill="none" aria-hidden="true">
         <defs>
           <marker id="arr" markerWidth="14" markerHeight="14" refX="9" refY="7" orient="auto">
-            <path d="M1,1 L12,7 L1,13" fill="none" stroke="#141210" stroke-width="2.5"
+            <path d="M1,2 L12,7 L1,12" fill="none" stroke="#141210" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+          <marker id="arr2" markerWidth="14" markerHeight="14" refX="5" refY="7" orient="auto">
+            <path d="M1,2 L12,7 L1,12" fill="none" stroke="#141210" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round"/>
           </marker>
         </defs>
-        <!-- attr-1 top-left → carne -->
-        <path d="M 152 88 C 182 138, 218 184, 240 224"
+        <!-- attr-1 top-left → línea recta hacia carne -->
+        <line x1="150" y1="86" x2="232" y2="224"
           stroke="#141210" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/>
-        <!-- attr-2 top-right → carne -->
-        <path d="M 408 88 C 378 138, 342 184, 320 224"
+        <!-- attr-2 top-right → línea recta hacia carne -->
+        <line x1="410" y1="86" x2="328" y2="224"
           stroke="#141210" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/>
-        <!-- attr-3 bottom → carne -->
-        <path d="M 280 440 C 280 408, 280 362, 280 304"
-          stroke="#141210" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/>
+        <!-- attr-3 bottom → arco curvo que rodea la carne desde abajo -->
+        <path d="M 230 438 C 180 480, 80 440, 80 320 C 80 260, 180 240, 248 248"
+          stroke="#141210" stroke-width="2.5" stroke-linecap="round" fill="none"
+          marker-end="url(#arr2)"/>
       </svg>
 
       <div class="attr attr-1">

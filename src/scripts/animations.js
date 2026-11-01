@@ -149,7 +149,7 @@ if (reduce) {
   // ---------- 3. PRODUCTOS: scroll horizontal + linger + color por sabor ----------
   mm.add('(min-width: 821px)', () => {
     const pista  = document.querySelector('.pista');
-    const panels = gsap.utils.toArray('.panel');
+    const panels = gsap.utils.toArray('.panel:not(.panel--spacer)');
     if (!pista || !panels.length) return;
 
     const dist = () => pista.scrollWidth - window.innerWidth;
@@ -233,7 +233,7 @@ if (reduce) {
   // ---------- 5. DÍA A DÍA: cartas apiladas ----------
   const cartas = gsap.utils.toArray('.carta');
   cartas.forEach((c, i) => {
-    gsap.fromTo(c.querySelector('.fotos'),
+    gsap.fromTo(c.querySelector('.foto'),
       { yPercent: -8 },
       { yPercent:  8, ease: 'none',
         scrollTrigger: { trigger: c, start: 'top bottom', end: 'bottom top', scrub: true } }

@@ -3,40 +3,26 @@ const cartas = [
   {
     i: 0, c: "var(--dorado)", titulo: "Entrenamiento",
     pack: "/img/pack-clasico.png", alt: "Clásico",
-    fotos: [
-      { src: "https://picsum.photos/seed/gym01/500/380", slot: 1 },
-      { src: "https://picsum.photos/seed/gym02/500/380", slot: 2 },
-      { src: "https://picsum.photos/seed/gym03/500/380", slot: 3 },
-    ],
+    foto: "https://picsum.photos/seed/gymfit/980/520",
+    nota: "Abrís el paquete, cargás y seguís.",
   },
   {
     i: 1, c: "var(--ajo)", titulo: "Trabajo",
     pack: "/img/pack-ajo.png", alt: "Ajo",
-    fotos: [
-      { src: "https://picsum.photos/seed/work01/500/380", slot: 1 },
-      { src: "https://picsum.photos/seed/work02/500/380", slot: 2 },
-      { src: "https://picsum.photos/seed/work03/500/380", slot: 3 },
-    ],
-    postit: "ABRÍ,\nPICÁ\nY SEGUÍ",
+    foto: "https://picsum.photos/seed/deskwork/980/520",
+    nota: "Snack de escritorio sin culpa.",
   },
   {
     i: 2, c: "var(--pimienta)", titulo: "Viajes",
     pack: "/img/pack-pimienta.png", alt: "Pimienta",
-    fotos: [
-      { src: "https://picsum.photos/seed/travel01/500/380", slot: 1 },
-      { src: "https://picsum.photos/seed/travel02/500/380", slot: 2 },
-      { src: "https://picsum.photos/seed/travel03/500/380", slot: 3 },
-    ],
+    foto: "https://picsum.photos/seed/roadtrip/980/520",
+    nota: "Entra en cualquier mochila.",
   },
   {
     i: 3, c: "var(--picante)", titulo: "Aire libre",
     pack: "/img/pack-picante.png", alt: "Picante",
-    fotos: [
-      { src: "https://picsum.photos/seed/nature01/500/380", slot: 1 },
-      { src: "https://picsum.photos/seed/nature02/500/380", slot: 2 },
-      { src: "https://picsum.photos/seed/nature03/500/380", slot: 3 },
-    ],
-    postit: "CARNE\nPOSTA",
+    foto: "https://picsum.photos/seed/hikingtrail/980/520",
+    nota: "Trekking, bici, pesca. Te sigue.",
   },
 ];
 ---
@@ -49,13 +35,9 @@ const cartas = [
   <div class="mazo">
     {cartas.map((c) => (
       <div class="carta" style={`--i:${c.i};--c:${c.c}`}>
-        <div class="fotos">
-          {c.fotos.map((f) => (
-            <figure class={`polo polo-${f.slot}`}>
-              <img src={f.src} alt="" loading="lazy" />
-            </figure>
-          ))}
-          {c.postit && <div class="postit">{c.postit}</div>}
+        <div class="foto">
+          <img src={c.foto} alt="" loading="lazy" />
+          <em>{c.nota}</em>
         </div>
         <div class="rotulo">
           <span class="disp">{c.titulo}</span>
@@ -102,63 +84,51 @@ const cartas = [
   transform-origin: 50% 0;
 }
 
-/* Cross-hatch texture */
-.carta::before {
+/* ---- Foto de fondo ---- */
+.carta .foto {
+  position: absolute;
+  inset: -12% 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.carta .foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .55;
+  mix-blend-mode: multiply;
+}
+
+/* Cross-hatch texture overlay */
+.carta .foto::after {
   content: '';
   position: absolute;
   inset: 0;
-  background-image:
-    repeating-linear-gradient( 45deg, rgba(0,0,0,.06) 0, rgba(0,0,0,.06) 1px, transparent 0, transparent 50%),
-    repeating-linear-gradient(-45deg, rgba(0,0,0,.06) 0, rgba(0,0,0,.06) 1px, transparent 0, transparent 50%);
-  background-size: 10px 10px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ---- Fotos container ---- */
-.fotos {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(0,0,0,.08) 0 14px,
+    transparent      14px 28px
+  );
   pointer-events: none;
 }
 
-/* ---- Polaroids ---- */
-.polo {
-  position: absolute;
-  background: #fff;
-  padding: 10px 10px 30px;
-  box-shadow: 4px 8px 24px #00000045;
-  width: clamp(140px, 20vw, 260px);
-}
-
-.polo img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  display: block;
-}
-
-.polo-1 { top: 6%;  left: 2%;  rotate: -8deg;  z-index: 2; }
-.polo-2 { top: 4%;  right: 2%; rotate:  7deg;  z-index: 2; }
-.polo-3 { top: 36%; left: 24%; rotate: -4deg;  z-index: 3; }
-
-/* ---- Post-it ---- */
-.postit {
-  position: absolute;
-  top: 20%;
-  right: 6%;
-  background: #fef08a;
-  padding: 12px 14px 14px;
-  font-family: var(--mono);
-  font-size: clamp(0.58rem, 1vw, 0.82rem);
-  line-height: 1.35;
-  white-space: pre-line;
-  box-shadow: 2px 3px 10px #00000025;
-  max-width: 130px;
-  rotate: 4deg;
-  z-index: 4;
-  color: var(--tinta);
+.carta .foto em {
+  position: relative;
+  z-index: 2;
+  font-family: var(--body);
+  font-style: normal;
+  font-size: clamp(11px, 1.2vw, 14px);
+  background: var(--crema);
+  padding: 6px 12px;
+  border-radius: 6px;
+  max-width: 78%;
+  text-align: center;
+  color: var(--tinta-2);
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
 }
 
 /* ---- Rotulo ---- */
@@ -186,8 +156,6 @@ const cartas = [
 }
 
 @media (max-width: 640px) {
-  .polo { width: 110px; padding: 8px 8px 24px; }
-  .polo-3 { left: 20%; top: 40%; }
-  .postit { font-size: 0.55rem; max-width: 100px; right: 4%; }
+  .carta .foto em { font-size: 11px; max-width: 85%; }
 }
 </style>

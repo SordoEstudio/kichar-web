@@ -1,18 +1,24 @@
 ---
+const items = [
+  "Carne posta, versión snack",
+  "50% proteína",
+  "Nuevo: sabor Pimienta Negra",
+  "Envíos a todo el país",
+  "Sin azúcar agregada",
+  "Gluten free",
+];
 ---
 <div class="ticker" aria-label="Banner promocional">
   <div class="track">
-    <div class="row">
-      <span>Carne posta, versión snack</span>
-      <span>50% proteína</span>
-      <span>Nuevo: sabor Pimienta Negra</span>
-      <span>Envíos a todo el país</span>
+    <div class="row" aria-hidden="true">
+      {items.map((t) => <span>{t}</span>)}
+      {items.map((t) => <span>{t}</span>)}
+      {items.map((t) => <span>{t}</span>)}
     </div>
     <div class="row" aria-hidden="true">
-      <span>Carne posta, versión snack</span>
-      <span>50% proteína</span>
-      <span>Nuevo: sabor Pimienta Negra</span>
-      <span>Envíos a todo el país</span>
+      {items.map((t) => <span>{t}</span>)}
+      {items.map((t) => <span>{t}</span>)}
+      {items.map((t) => <span>{t}</span>)}
     </div>
   </div>
 </div>
@@ -34,18 +40,20 @@
 
 .track {
   display: inline-flex;
-  animation: tick 24s linear infinite;
+  animation: tick 30s linear infinite;
+  will-change: transform;
 }
 
 .row {
   display: inline-flex;
-  gap: 28px;
-  padding-right: 28px;
+  gap: 32px;
+  padding-right: 32px;
+  flex-shrink: 0;
 }
 
 .row span::after {
   content: "✦";
-  margin-left: 28px;
+  margin-left: 32px;
   color: var(--dorado);
 }
 
