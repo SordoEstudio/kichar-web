@@ -25,10 +25,11 @@ if (!reduce) {
 
 if (reduce) {
   window.addEventListener('load', () => ScrollTrigger.refresh());
+  // skip all motion
 } else {
   const mm = gsap.matchMedia();
 
-  // ---------- 1. HERO: pin extendido + parallax + mouse ----------
+  // ---------- 1. HERO: pin + parallax + mouse ----------
   mm.add({ desk: '(min-width: 821px)', mob: '(max-width: 820px)' }, (ctx) => {
     const desk = ctx.conditions.desk;
 
@@ -36,7 +37,7 @@ if (reduce) {
       scrollTrigger: {
         trigger: '.hero',
         start: 'top top',
-        end: desk ? '+=250%' : '+=100%',
+        end: desk ? '+=150%' : '+=80%',
         scrub: 1,
         pin: true,
       },
@@ -57,6 +58,7 @@ if (reduce) {
       .to('.d-numeral',     { y: -260, rotation: 60, ease: 'none' }, 0)
       .to('.hero .slogan',  { yPercent: -180, scale: 1.1, ease: 'none' }, 0);
 
+    // Mouse parallax (solo desktop)
     if (desk) {
       const hero = document.querySelector('.hero');
       const layers = [
@@ -79,20 +81,7 @@ if (reduce) {
     }
   });
 
-  // ---------- 2. CONOCÉ: entrada secuencial + texto por palabras + SVG ----------
-  gsap.from('.conoce .pill', {
-    opacity: 0, y: 30,
-    scrollTrigger: { trigger: '.conoce', start: 'top 80%', end: 'top 55%', scrub: true },
-  });
-  gsap.from('.conoce .lead', {
-    opacity: 0, y: 24,
-    scrollTrigger: { trigger: '.conoce', start: 'top 70%', end: 'top 42%', scrub: true },
-  });
-  gsap.from('.conoce .paso', {
-    opacity: 0, y: 20, stagger: .15,
-    scrollTrigger: { trigger: '.conoce .pasos', start: 'top 85%', end: 'top 55%', scrub: true },
-  });
-
+  // ---------- 2. CONOCÉ: texto por palabras + SVG dibujado ----------
   const heading = document.querySelector('.conoce .split');
   if (heading) {
     heading.innerHTML = heading.textContent
@@ -111,8 +100,9 @@ if (reduce) {
   const trazado = document.querySelector('.conoce .dibujar');
   if (trazado) {
     const L = trazado.getTotalLength();
-    gsap.set(trazado, { strokeDasharray: L, strokeDashoffset: L });
-    gsap.to(trazado,
+    gsap.set(trazado, { strokeDasharray: L, strokeDashoffset: L * 0.15 });
+    gsap.fromTo(trazado,
+      { strokeDashoffset: L },
       { strokeDashoffset: 0, ease: 'none',
         scrollTrigger: { trigger: '.conoce .pila', start: 'top 85%', end: 'center 45%', scrub: true } }
     );
@@ -124,27 +114,26 @@ if (reduce) {
       scrollTrigger: { trigger: '.conoce', start: 'top bottom', end: 'bottom top', scrub: true } }
   );
 
-  // ---------- 3. PRODUCTOS: horizontal + linger en último panel + color ----------
+  // ---------- 3. PRODUCTOS: scroll horizontal + color por sabor ----------
   mm.add('(min-width: 821px)', () => {
     const pista  = document.querySelector('.pista');
     const panels = gsap.utils.toArray('.panel');
     if (!pista || !panels.length) return;
 
-    const dist   = () => pista.scrollWidth - window.innerWidth;
-    const linger = 0.45;
+    const dist = () => pista.scrollWidth - window.innerWidth;
 
-    const hz = gsap.timeline({
+    const hz = gsap.to(pista, {
+      x: () => -dist(),
+      ease: 'none',
       scrollTrigger: {
         trigger: '.productos',
         start: 'top top',
-        end: () => '+=' + Math.round(dist() * (1 + linger)),
+        end: () => '+=' + dist(),
         scrub: 1,
         pin: true,
         invalidateOnRefresh: true,
       },
     });
-    hz.to(pista, { x: () => -dist(), ease: 'none', duration: 1 });
-    hz.to({}, { duration: linger }); // linger: último panel en posición final
 
     const cols = panels.map((el) => el.dataset.color);
     const bg = gsap.timeline({
@@ -173,12 +162,7 @@ if (reduce) {
     });
   });
 
-  // ---------- 4. POR QUÉ: título + contadores + sellos + cintas ----------
-  gsap.from('.porque .pill, .porque h2', {
-    opacity: 0, yPercent: 35, stagger: .15,
-    scrollTrigger: { trigger: '.porque', start: 'top 72%', end: 'top 38%', scrub: true },
-  });
-
+  // ---------- 4. POR QUÉ: contadores + sellos + cintas ----------
   document.querySelectorAll('.cnt').forEach((el) => {
     const to = +el.dataset.to;
     if (isNaN(to)) return;
@@ -202,7 +186,6 @@ if (reduce) {
       scrollTrigger: { trigger: '.stats', start: 'top 85%', end: 'top 45%', scrub: true } }
   );
 
-  // Cintas: xPercent opuesto + yPercent parallax entre ellas
   gsap.fromTo('.cinta.a .in', { xPercent: 0 },
     { xPercent: -35, ease: 'none',
       scrollTrigger: { trigger: '.cintas', start: 'top bottom', end: 'bottom top', scrub: true } }
@@ -211,21 +194,8 @@ if (reduce) {
     { xPercent: 0, ease: 'none',
       scrollTrigger: { trigger: '.cintas', start: 'top bottom', end: 'bottom top', scrub: true } }
   );
-  gsap.fromTo('.cinta.a', { yPercent: 0 },
-    { yPercent: -20, ease: 'none',
-      scrollTrigger: { trigger: '.cintas', start: 'top bottom', end: 'bottom top', scrub: true } }
-  );
-  gsap.fromTo('.cinta.b', { yPercent: 0 },
-    { yPercent: 20, ease: 'none',
-      scrollTrigger: { trigger: '.cintas', start: 'top bottom', end: 'bottom top', scrub: true } }
-  );
 
-  // ---------- 5. DÍA A DÍA: entrada título + cartas apiladas ----------
-  gsap.from('.dia-intro', {
-    opacity: 0, yPercent: 25,
-    scrollTrigger: { trigger: '.dia', start: 'top 80%', end: 'top 42%', scrub: true },
-  });
-
+  // ---------- 5. DÍA A DÍA: cartas apiladas ----------
   const cartas = gsap.utils.toArray('.carta');
   cartas.forEach((c, i) => {
     gsap.fromTo(c.querySelector('.foto'),
@@ -241,12 +211,7 @@ if (reduce) {
     }
   });
 
-  // ---------- 6. DISTRIBUIDORES: título + abanico ----------
-  gsap.from('.distri-cab', {
-    opacity: 0, yPercent: 20,
-    scrollTrigger: { trigger: '.distri', start: 'top 75%', end: 'top 40%', scrub: true },
-  });
-
+  // ---------- 6. DISTRIBUIDORES: abanico ----------
   const fan = gsap.utils.toArray('.abanico img');
   if (fan.length) {
     gsap.fromTo(fan,
@@ -260,11 +225,12 @@ if (reduce) {
     );
   }
 
-  // ---------- 7. CONTACTO: logo fondo ----------
-  gsap.from('.logo-bottom', {
-    opacity: 0, scale: .88, yPercent: 8,
-    scrollTrigger: { trigger: '.pie', start: 'top 80%', end: 'top 35%', scrub: true },
-  });
+  // ---------- 7. CONTACTO: letras del logo ----------
+  gsap.fromTo('.gigante span',
+    { yPercent: (i) => 60 + i * 25 },
+    { yPercent: 0, ease: 'none',
+      scrollTrigger: { trigger: '.pie', start: 'top 85%', end: 'bottom bottom', scrub: true } }
+  );
 
   window.addEventListener('load', () => ScrollTrigger.refresh());
 }
