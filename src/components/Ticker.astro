@@ -1,17 +1,19 @@
 ---
 ---
 <div class="ticker" aria-label="Banner promocional">
-  <div class="row">
-    <span>Nuevo: sabor Pimienta Negra</span>
-    <span>Envíos a todo el país</span>
-    <span>Carne posta, versión snack</span>
-    <span>50% proteína</span>
-  </div>
-  <div class="row" aria-hidden="true">
-    <span>Nuevo: sabor Pimienta Negra</span>
-    <span>Envíos a todo el país</span>
-    <span>Carne posta, versión snack</span>
-    <span>50% proteína</span>
+  <div class="track">
+    <div class="row">
+      <span>Carne posta, versión snack</span>
+      <span>50% proteína</span>
+      <span>Nuevo: sabor Pimienta Negra</span>
+      <span>Envíos a todo el país</span>
+    </div>
+    <div class="row" aria-hidden="true">
+      <span>Carne posta, versión snack</span>
+      <span>50% proteína</span>
+      <span>Nuevo: sabor Pimienta Negra</span>
+      <span>Envíos a todo el país</span>
+    </div>
   </div>
 </div>
 
@@ -30,20 +32,25 @@
   padding-block: 8px;
 }
 
-.ticker .row {
+.track {
+  display: inline-flex;
+  animation: tick 24s linear infinite;
+}
+
+.row {
   display: inline-flex;
   gap: 28px;
   padding-right: 28px;
-  animation: tick 22s linear infinite;
 }
 
-.ticker .row span::after {
+.row span::after {
   content: "✦";
   margin-left: 28px;
   color: var(--dorado);
 }
 
 @keyframes tick {
-  to { transform: translateX(-100%); }
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 </style>

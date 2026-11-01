@@ -9,28 +9,45 @@
         Durante generaciones, la carne deshidratada fue la forma de conservar los alimentos.
         Recuperamos esa idea y la llevamos al presente: un snack cárnico para una vida activa.
       </p>
-      <div class="pasos">
-        <div class="paso">
-          <b>Carne de pastura</b>
-          <span>Cortes magros, sin rellenos.</span>
-        </div>
-        <div class="paso">
-          <b>Sidra + sal</b>
-          <span>Vinagre de manzana y sal. Nada más.</span>
-        </div>
-        <div class="paso">
-          <b>Secado lento</b>
-          <span>Deshidratado sin azúcar ni conservantes.</span>
-        </div>
-      </div>
     </div>
     <div class="pila">
-      <svg viewBox="0 0 600 360" fill="none" aria-hidden="true">
+      <svg class="aro-svg" viewBox="0 0 600 360" fill="none" aria-hidden="true">
         <path class="dibujar"
           d="M40 230 C 20 140, 200 60, 340 64 C 500 68, 590 140, 566 210 C 540 290, 360 320, 240 312 C 120 304, 44 280, 40 230 C 38 200, 80 160, 150 132"
           stroke="#141210" stroke-width="7" stroke-linecap="round"/>
       </svg>
       <img src="/img/pila.webp" alt="Pila de carne deshidratada Kichar" style="position:relative" />
+
+      <!-- flechas SVG de callouts → carne -->
+      <svg class="flechas" viewBox="0 0 560 460" fill="none" aria-hidden="true">
+        <defs>
+          <marker id="arr" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L9,3 z" fill="#141210"/>
+          </marker>
+        </defs>
+        <!-- attr-1 top-left → carne -->
+        <path d="M 155 72 C 190 125, 225 175, 245 218"
+          stroke="#141210" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/>
+        <!-- attr-2 top-right → carne -->
+        <path d="M 405 72 C 370 125, 335 175, 315 218"
+          stroke="#141210" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/>
+        <!-- attr-3 bottom → carne -->
+        <path d="M 280 396 C 280 366, 280 320, 280 290"
+          stroke="#141210" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/>
+      </svg>
+
+      <div class="attr attr-1">
+        <b>Carne de pastura</b>
+        <span>Cortes magros, sin rellenos.</span>
+      </div>
+      <div class="attr attr-2">
+        <b>Sidra + sal</b>
+        <span>Vinagre de manzana y sal. Nada más.</span>
+      </div>
+      <div class="attr attr-3">
+        <b>Secado lento</b>
+        <span>Sin azúcar ni conservantes.</span>
+      </div>
     </div>
   </div>
 </section>
@@ -58,43 +75,68 @@
 
 .conoce .pila {
   position: relative;
+  height: 460px;
 }
 
-.conoce .pila svg {
+.conoce .pila img {
+  position: absolute;
+  width: 58%;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+}
+
+.aro-svg {
   position: absolute;
   inset: -6% -4%;
   width: 108%;
   height: 112%;
 }
 
-.pasos {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 36px;
+.flechas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
 }
 
-.paso {
-  flex: 1 1 150px;
-  min-width: 0;
-  border-top: 3px solid var(--tinta);
-  padding-top: 10px;
+.attr {
+  position: absolute;
+  background: var(--crema);
+  border: 2.5px solid var(--tinta);
+  border-radius: 8px;
+  padding: 10px 14px;
+  max-width: 150px;
+  z-index: 5;
 }
 
-.paso b {
+.attr b {
   display: block;
   font-family: var(--display);
   font-weight: 400;
   text-transform: uppercase;
-  font-size: 1.05rem;
+  font-size: .88rem;
+  line-height: 1.1;
 }
 
-.paso span {
-  font-size: .92rem;
+.attr span {
+  font-size: .76rem;
   color: var(--tinta-2);
+  display: block;
+  margin-top: 3px;
 }
+
+.attr-1 { top: 5%;    left: 0; }
+.attr-2 { top: 5%;    right: 0; }
+.attr-3 { bottom: 5%; left: 50%; transform: translateX(-50%); }
 
 @media (max-width: 820px) {
   .conoce .grid { grid-template-columns: 1fr; }
+  .conoce .pila { height: 380px; }
+  .attr { max-width: 120px; }
+  .attr b { font-size: .8rem; }
+  .attr span { font-size: .7rem; }
 }
 </style>

@@ -120,21 +120,20 @@ if (reduce) {
     const panels = gsap.utils.toArray('.panel');
     if (!pista || !panels.length) return;
 
-    const dist   = () => pista.scrollWidth - window.innerWidth;
-    const linger = 0.5;
+    const dist = () => pista.scrollWidth - window.innerWidth;
 
-    const hz = gsap.timeline({
+    const hz = gsap.to(pista, {
+      x: () => -dist(),
+      ease: 'none',
       scrollTrigger: {
         trigger: '.productos',
         start: 'top top',
-        end: () => '+=' + Math.round(dist() * (1 + linger)),
+        end: () => '+=' + dist(),
         scrub: 1,
         pin: true,
         invalidateOnRefresh: true,
       },
     });
-    hz.to(pista, { x: () => -dist(), ease: 'none', duration: 1 });
-    hz.to({}, { duration: linger });
 
     const cols = panels.map((el) => el.dataset.color);
     const bg = gsap.timeline({
