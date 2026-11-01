@@ -11,7 +11,7 @@ const packs = [
 <section class="distri wrap" id="distribuidores">
   <div class="distri-cab">
     <span class="pill" style="--c:var(--dorado);color:var(--tinta)">Distribuidores y puntos de venta</span>
-    <h2 class="disp">Llevá Kichar<br />a tu góndola</h2>
+    <h2 class="disp">Llevá Kichar<br /><span class="r">a tu góndola</span></h2>
   </div>
   <div class="grid">
     <div class="abanico" aria-hidden="true">
@@ -77,6 +77,11 @@ const packs = [
   font-size: clamp(3rem, 6.5vw, 6rem);
   margin-top: 18px;
   line-height: 1;
+}
+
+.distri-cab h2 .r {
+  display: block;
+  text-align: right;
 }
 
 .distri .grid {

@@ -1,9 +1,6 @@
 ---
 ---
 <footer class="pie wrap" id="contacto">
-  <div class="logo-footer">
-    <img src="/img/logo-light.png" alt="Kichar Snack" />
-  </div>
   <p class="tagline">Carne posta, versión snack.</p>
   <div class="redes">
     <span data-handle="@kichar.snack">Instagram</span>
@@ -24,20 +21,15 @@
   position: relative;
   background: var(--tinta);
   color: var(--crema);
-  padding-block: 100px 60px;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding-block: 60px;
   overflow: hidden;
   text-align: center;
-}
-
-.logo-footer {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 12px;
-}
-
-.logo-footer img {
-  width: clamp(180px, 28vw, 320px);
-  height: auto;
 }
 
 .tagline {
@@ -130,7 +122,6 @@
 
 /* Logo grande al fondo */
 .logo-bottom {
-  margin-top: 70px;
   display: flex;
   justify-content: center;
 }

@@ -18,8 +18,8 @@ const stats = [
           <div class="sello" style={`--c:${s.c}`}>{s.sello}</div>
           <div class="n">
             {s.n !== null
-              ? <><span class="cnt" data-to={s.n}>{s.n}</span>{s.unit}</>
-              : s.unit}
+              ? <><span class="cnt" data-to={s.n}>{s.n}</span>{s.unit && <span class="unit">{s.unit}</span>}</>
+              : <span class="unit-main">{s.unit}</span>}
           </div>
           <b>{s.label}</b>
           <span>{s.sub}</span>
@@ -64,9 +64,20 @@ const stats = [
 .stat .n {
   font-family: var(--display);
   font-weight: 400;
-  font-size: clamp(2.6rem, 5vw, 4.4rem);
+  font-size: clamp(3.2rem, 6vw, 5.6rem);
   line-height: .9;
   font-variant-numeric: tabular-nums;
+}
+
+.stat .unit {
+  font-size: .42em;
+  vertical-align: top;
+  line-height: 1.5;
+  padding-left: .05em;
+}
+
+.stat .unit-main {
+  /* GF: ocupa todo el .n igual que un número */
 }
 
 .stat b {

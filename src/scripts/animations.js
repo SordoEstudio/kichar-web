@@ -114,26 +114,27 @@ if (reduce) {
       scrollTrigger: { trigger: '.conoce', start: 'top bottom', end: 'bottom top', scrub: true } }
   );
 
-  // ---------- 3. PRODUCTOS: scroll horizontal + color por sabor ----------
+  // ---------- 3. PRODUCTOS: scroll horizontal + linger + color por sabor ----------
   mm.add('(min-width: 821px)', () => {
     const pista  = document.querySelector('.pista');
     const panels = gsap.utils.toArray('.panel');
     if (!pista || !panels.length) return;
 
-    const dist = () => pista.scrollWidth - window.innerWidth;
+    const dist   = () => pista.scrollWidth - window.innerWidth;
+    const linger = 0.5;
 
-    const hz = gsap.to(pista, {
-      x: () => -dist(),
-      ease: 'none',
+    const hz = gsap.timeline({
       scrollTrigger: {
         trigger: '.productos',
         start: 'top top',
-        end: () => '+=' + dist(),
+        end: () => '+=' + Math.round(dist() * (1 + linger)),
         scrub: 1,
         pin: true,
         invalidateOnRefresh: true,
       },
     });
+    hz.to(pista, { x: () => -dist(), ease: 'none', duration: 1 });
+    hz.to({}, { duration: linger });
 
     const cols = panels.map((el) => el.dataset.color);
     const bg = gsap.timeline({
@@ -198,7 +199,7 @@ if (reduce) {
   // ---------- 5. DÍA A DÍA: cartas apiladas ----------
   const cartas = gsap.utils.toArray('.carta');
   cartas.forEach((c, i) => {
-    gsap.fromTo(c.querySelector('.foto'),
+    gsap.fromTo(c.querySelector('.fotos'),
       { yPercent: -8 },
       { yPercent:  8, ease: 'none',
         scrollTrigger: { trigger: c, start: 'top bottom', end: 'bottom top', scrub: true } }

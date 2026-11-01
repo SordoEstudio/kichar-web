@@ -1,9 +1,41 @@
 ---
 const cartas = [
-  { i: 0, c: "var(--dorado)",   titulo: "Entrenamiento", pack: "/img/pack-clasico.png",  alt: "Clásico", scene: "Gym: abrís el paquete después de entrenar" },
-  { i: 1, c: "var(--ajo)",      titulo: "Trabajo",       pack: "/img/pack-ajo.png",       alt: "Ajo",     scene: "Escritorio / oficina, paquete junto a la notebook" },
-  { i: 2, c: "var(--pimienta)", titulo: "Viajes",        pack: "/img/pack-pimienta.png",  alt: "Pimienta",scene: "Ruta / auto / mochila de viaje" },
-  { i: 3, c: "var(--picante)",  titulo: "Aire libre",    pack: "/img/pack-picante.png",   alt: "Picante", scene: "Trekking, bici o pesca al aire libre" },
+  {
+    i: 0, c: "var(--dorado)", titulo: "Entrenamiento",
+    pack: "/img/pack-clasico.png", alt: "Clásico",
+    fotos: [
+      { src: "https://picsum.photos/seed/gym01/400/300", slot: 1 },
+      { src: "https://picsum.photos/seed/gym02/400/300", slot: 2 },
+      { src: "https://picsum.photos/seed/gym03/400/300", slot: 3 },
+    ],
+  },
+  {
+    i: 1, c: "var(--ajo)", titulo: "Trabajo",
+    pack: "/img/pack-ajo.png", alt: "Ajo",
+    fotos: [
+      { src: "https://picsum.photos/seed/work01/400/300", slot: 1 },
+      { src: "https://picsum.photos/seed/work02/400/300", slot: 2 },
+    ],
+    postit: "ABRÍ,\nPICÁ\nY SEGUÍ",
+  },
+  {
+    i: 2, c: "var(--pimienta)", titulo: "Viajes",
+    pack: "/img/pack-pimienta.png", alt: "Pimienta",
+    fotos: [
+      { src: "https://picsum.photos/seed/travel01/400/300", slot: 1 },
+      { src: "https://picsum.photos/seed/travel02/400/300", slot: 2 },
+      { src: "https://picsum.photos/seed/travel03/400/300", slot: 3 },
+    ],
+  },
+  {
+    i: 3, c: "var(--picante)", titulo: "Aire libre",
+    pack: "/img/pack-picante.png", alt: "Picante",
+    fotos: [
+      { src: "https://picsum.photos/seed/nature01/400/300", slot: 1 },
+      { src: "https://picsum.photos/seed/nature02/400/300", slot: 2 },
+    ],
+    postit: "CARNE\nPOSTA",
+  },
 ];
 ---
 <section class="dia wrap" id="dia">
@@ -15,8 +47,13 @@ const cartas = [
   <div class="mazo">
     {cartas.map((c) => (
       <div class="carta" style={`--i:${c.i};--c:${c.c}`}>
-        <div class="foto">
-          <em>{c.scene}</em>
+        <div class="fotos">
+          {c.fotos.map((f) => (
+            <figure class={`polo polo-${f.slot}`}>
+              <img src={f.src} alt="" loading="lazy" />
+            </figure>
+          ))}
+          {c.postit && <div class="postit">{c.postit}</div>}
         </div>
         <div class="rotulo">
           <span class="disp">{c.titulo}</span>
@@ -51,31 +88,53 @@ const cartas = [
   transform-origin: 50% 0;
 }
 
-.carta .foto {
+/* ---- Fotos container ---- */
+.fotos {
   position: absolute;
-  inset: -12% 0;
-  display: grid;
-  place-items: center;
-  background: repeating-linear-gradient(
-    135deg,
-    #00000010 0 14px,
-    transparent 14px 28px
-  ),
-  var(--c);
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.carta .foto em {
-  font-family: var(--body);
-  font-style: normal;
-  font-size: 13px;
-  background: var(--crema);
-  padding: 6px 10px;
-  border-radius: 6px;
-  max-width: 80%;
-  text-align: center;
-  color: var(--tinta-2);
+/* ---- Polaroids ---- */
+.polo {
+  position: absolute;
+  background: #fff;
+  padding: 8px 8px 26px;
+  box-shadow: 3px 6px 20px #00000040;
+  width: clamp(110px, 15vw, 190px);
 }
 
+.polo img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.polo-1 { top: 8%;  left: 5%;  rotate: -8deg;  z-index: 2; }
+.polo-2 { top: 4%;  right: 5%; rotate:  7deg;  z-index: 2; }
+.polo-3 { top: 32%; left: 30%; rotate: -4deg;  z-index: 3; }
+
+/* ---- Post-it ---- */
+.postit {
+  position: absolute;
+  top: 22%;
+  right: 8%;
+  background: #fef08a;
+  padding: 12px 14px 14px;
+  font-family: var(--mono);
+  font-size: clamp(0.58rem, 1vw, 0.82rem);
+  line-height: 1.35;
+  white-space: pre-line;
+  box-shadow: 2px 3px 10px #00000025;
+  max-width: 130px;
+  rotate: 4deg;
+  z-index: 4;
+  color: var(--tinta);
+}
+
+/* ---- Rotulo ---- */
 .carta .rotulo {
   position: absolute;
   left: 24px;
@@ -85,6 +144,7 @@ const cartas = [
   justify-content: space-between;
   align-items: end;
   gap: 12px;
+  z-index: 5;
 }
 
 .carta .rotulo .disp {
@@ -96,5 +156,11 @@ const cartas = [
   width: clamp(70px, 9vw, 110px);
   rotate: 8deg;
   filter: drop-shadow(0 10px 10px #0003);
+}
+
+@media (max-width: 640px) {
+  .polo { width: 90px; }
+  .polo-3 { display: none; }
+  .postit { font-size: 0.55rem; max-width: 100px; }
 }
 </style>
