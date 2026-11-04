@@ -14,8 +14,6 @@
 
   <img class="pouch capa" src="/img/pack-clasico.png" alt="Paquete Kichar sabor Clásico" />
 
-  <div class="claim c1 capa">50% proteína<small>por paquete</small></div>
-  <div class="claim c2 capa">Cero azúcar</div>
 
   <img class="capa t4" src="/img/pack-hot-chili.png" alt="" data-fg />
   <img class="capa t2" src="/img/pack-pimienta.png" alt="" data-fg />
@@ -83,25 +81,6 @@
   display: none;
 }
 
-.hero .claim {
-  position: absolute;
-  font-family: var(--display);
-  font-weight: 400;
-  text-transform: uppercase;
-  line-height: 1;
-  font-size: clamp(1rem, 2vw, 1.6rem);
-}
-
-.hero .claim small {
-  display: block;
-  font-family: var(--body);
-  font-weight: 500;
-  text-transform: none;
-  font-size: .7em;
-}
-
-.hero .c1 { left: 12%; top: 42%; }
-.hero .c2 { right: 12%; top: 42%; text-align: right; }
 
 .hero .slogan {
   position: absolute;
@@ -130,8 +109,6 @@
 .d-numeral  { width: clamp(60px, 6vw, 90px); left: 7%; top: 30%; }
 
 @media (max-width: 640px) {
-  .hero .c1 { left: 5%; top: 40%; }
-  .hero .c2 { right: 5%; top: 40%; }
   .hero .pouch { top: 62%; }
   .d-estrella, .d-numeral { display: none; }
 }
