@@ -108,22 +108,41 @@ if (reduce) {
     );
   }
 
-  gsap.fromTo('.conoce .pila img',
+  // .nucleo wraps img + orbita so both move together — keeps orbit centered on meat
+  gsap.fromTo('.conoce .nucleo',
     { yPercent: 12, rotation: -4 },
     { yPercent: -8,  rotation:  2, ease: 'none',
       scrollTrigger: { trigger: '.conoce', start: 'top bottom', end: 'bottom top', scrub: true } }
   );
 
-  // Cursor parallax en .pila (desktop)
+  // Orbit + cursor parallax en .pila (desktop)
   mm.add('(min-width: 821px)', () => {
     const sec = document.querySelector('.conoce');
     if (!sec) return;
     const pila = sec.querySelector('.pila');
+
+    // Initial card tilts (CSS rotate removed; handled here)
+    gsap.set('.attr-1', { rotation: -3 });
+    gsap.set('.attr-2', { rotation:  2 });
+    gsap.set('.attr-3', { rotation: -1 });
+
+    // Orbit scroll: orbita rotates CW, attrs counter-rotate to stay upright
+    const orbitST = {
+      trigger: '.conoce',
+      start: 'top 80%',
+      end: 'bottom 25%',
+      scrub: 1.5,
+    };
+
+    gsap.to('.orbita',  { rotation: 360,  ease: 'none', scrollTrigger: orbitST });
+    // counter-rotation = initial_tilt - 360
+    gsap.to('.attr-1',  { rotation: -363, ease: 'none', scrollTrigger: orbitST });
+    gsap.to('.attr-2',  { rotation: -358, ease: 'none', scrollTrigger: orbitST });
+    gsap.to('.attr-3',  { rotation: -361, ease: 'none', scrollTrigger: orbitST });
+
+    // Cursor parallax: nucleo moves as unit (img + orbit always aligned)
     const pairs = [
-      [pila.querySelector('img'),      9],
-[pila.querySelector('.attr-1'),  13],
-      [pila.querySelector('.attr-2'),  13],
-      [pila.querySelector('.attr-3'),  7],
+      [sec.querySelector('.nucleo'),   9],
       [pila.querySelector('.aro-svg'), 4],
     ];
     const qs = pairs
@@ -142,7 +161,10 @@ if (reduce) {
     };
 
     sec.addEventListener('pointermove', onMove);
-    return () => sec.removeEventListener('pointermove', onMove);
+    return () => {
+      sec.removeEventListener('pointermove', onMove);
+      gsap.set(['.attr-1', '.attr-2', '.attr-3'], { clearProps: 'rotation' });
+    };
   });
 
   // ---------- 3. PRODUCTOS: scroll horizontal + linger + color por sabor ----------
