@@ -53,6 +53,7 @@
   inset: auto 0 0 0;
   height: 42%;
   background: var(--dorado);
+  z-index: 1;
 }
 
 .hero .marca {
@@ -119,10 +120,10 @@
   will-change: transform;
 }
 
-.t1 { width: clamp(130px, 17vw, 260px); left: -2%; top: 62%; mix-blend-mode: multiply; }
-.t2 { width: clamp(120px, 14vw, 220px); right: -1%; top: 22%; mix-blend-mode: multiply; opacity: .85; }
-.t3 { width: clamp(110px, 13vw, 200px); right: 6%; bottom: -4%; mix-blend-mode: multiply; }
-.t4 { width: clamp(90px, 10vw, 160px); left: 16%; top: 16%; mix-blend-mode: multiply; opacity: .75; }
+.t1 { width: clamp(130px, 17vw, 260px); left: -2%; top: 62%; z-index: 2; }
+.t2 { width: clamp(120px, 14vw, 220px); right: -1%; top: 22%; z-index: 2; }
+.t3 { width: clamp(110px, 13vw, 200px); right: 6%; bottom: -4%; z-index: 2; }
+.t4 { width: clamp(90px, 10vw, 160px); left: 16%; top: 16%; z-index: 2; }
 
 .d-estrella { width: clamp(70px, 8vw, 120px); right: 22%; top: 30%; }
 .d-garabato { width: clamp(90px, 10vw, 150px); left: 24%; bottom: 14%; }
