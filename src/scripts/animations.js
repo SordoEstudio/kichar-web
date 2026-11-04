@@ -277,7 +277,7 @@ if (reduce) {
         rotation: (i) => (i - (fan.length - 1) / 2) * 14,
         x:        (i) => (i - (fan.length - 1) / 2) * 18,
         ease: 'none',
-        scrollTrigger: { trigger: '.distri', start: 'top 80%', end: 'center 55%', scrub: true },
+        scrollTrigger: { trigger: '.distri', start: 'top 50%', end: 'center 40%', scrub: true },
       }
     );
   }
