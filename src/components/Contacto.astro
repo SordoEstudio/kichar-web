@@ -1,12 +1,11 @@
 ---
 ---
 <footer class="pie wrap" id="contacto">
-  <p class="tagline">Carne posta, versión snack.</p>
   <div class="redes">
-    <span data-handle="@kichar.snack">Instagram</span>
-    <span data-handle="+54 9 XXX XXX XXXX">WhatsApp</span>
-    <span data-handle="hola@kicharsnack.com.ar">Contacto</span>
-    <span data-handle="kicharsnack.com.ar">Web</span>
+    <span style="--c:var(--dorado)"   data-handle="@kichar.snack">Instagram</span>
+    <span style="--c:var(--pimienta)" data-handle="+54 9 XXX XXX XXXX">WhatsApp</span>
+    <span style="--c:var(--ajo)"      data-handle="hola@kicharsnack.com.ar">Contacto</span>
+    <span style="--c:var(--picante)"  data-handle="kicharsnack.com.ar">Web</span>
   </div>
   <div class="logo-bottom">
     <img src="/img/logo-kichar-final.png" alt="Kichar Snack" />
@@ -32,13 +31,6 @@
   text-align: center;
 }
 
-.tagline {
-  font-family: var(--body);
-  font-size: clamp(1rem, 1.4vw, 1.2rem);
-  opacity: .7;
-  margin: 0 0 8px;
-}
-
 .pie .redes {
   display: flex;
   gap: 12px;
@@ -49,7 +41,7 @@
 
 .pie .redes span {
   position: relative;
-  border: 2px solid var(--crema);
+  border: 2px solid var(--c, var(--crema));
   border-radius: 999px;
   padding: 8px 16px;
   font-family: var(--display);
@@ -68,7 +60,7 @@
   bottom: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%) translateY(6px);
-  background: var(--crema);
+  background: var(--c, var(--crema));
   color: var(--tinta);
   font-family: var(--body);
   font-size: 11px;
@@ -115,7 +107,7 @@
 }
 
 /* Hover por red */
-.pie .redes span:hover { background: var(--picante); color: var(--crema); border-color: var(--picante); }
+.pie .redes span:hover { background: var(--c); color: var(--tinta); border-color: var(--c); }
 
 /* Logo grande al fondo */
 .logo-bottom {
