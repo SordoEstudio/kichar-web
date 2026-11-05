@@ -3,7 +3,7 @@ const stats = [
   { n: 50, unit: "%", label: "Proteína",   sub: "Saciedad real entre comidas.", sello: "Por paquete", c: "var(--dorado)" },
   { n: 0,  unit: " g", label: "Azúcar",    sub: "Cero azúcar agregada.",        sello: "Sin vueltas", c: "var(--pimienta)" },
   { n: 286, unit: "", label: "Calorías",   sub: "Energía para moverte.",         sello: "Por paquete", c: "var(--picante)" },
-  { n: null, unit: "GF", label: "Gluten free", sub: "Carne, sidra y sal.",      sello: "Apto",        c: "var(--ajo)" },
+  { n: null, prefix: "GLUTEN", unit: "FREE", label: "Sin TACC", sub: "Carne, sidra y sal.", sello: "Sin TACC", c: "var(--ajo)" },
 ];
 ---
 <section class="porque" id="porque">
@@ -19,7 +19,9 @@ const stats = [
           <div class="n">
             {s.n !== null
               ? <><span class="cnt" data-to={s.n}>{s.n}</span>{s.unit && <span class="unit">{s.unit}</span>}</>
-              : <span class="unit-main">{s.unit}</span>}
+              : s.prefix
+                ? <div class="gf-stack"><span class="gf-top">{s.prefix}</span><span>{s.unit}</span></div>
+                : <span class="unit-main">{s.unit}</span>}
           </div>
           <b>{s.label}</b>
           <span>{s.sub}</span>
@@ -84,8 +86,20 @@ const stats = [
   padding-top: .08em;
 }
 
-.stat .unit-main {
-  /* GF: ocupa todo el .n igual que un número */
+.gf-stack {
+  display: flex;
+  flex-direction: column;
+  line-height: .95;
+}
+
+.gf-top {
+  font-size: .2em;
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding-bottom: .15em;
+  opacity: .7;
 }
 
 .stat b {

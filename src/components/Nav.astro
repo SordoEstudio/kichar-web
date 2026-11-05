@@ -12,14 +12,25 @@
 </nav>
 
 <script>
-  const nav = document.getElementById('nav-g');
-  const hero = document.querySelector('.hero');
-  if (nav && hero) {
-    new IntersectionObserver(
-      ([e]) => nav.classList.toggle('visible', !e.isIntersecting),
-      { threshold: 0 }
-    ).observe(hero);
+  const nav  = document.getElementById('nav-g');
+  const hero = document.querySelector('.hero') as HTMLElement;
+  if (!nav || !hero) throw new Error();
+
+  let prevY   = window.scrollY;
+  let ticking = false;
+
+  function update() {
+    const y       = window.scrollY;
+    const pastHero = y > hero.offsetTop + hero.offsetHeight * 0.6;
+    const goingUp  = y < prevY;
+    nav.classList.toggle('visible', pastHero && goingUp);
+    prevY   = y;
+    ticking = false;
   }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
 </script>
 
 <style>
