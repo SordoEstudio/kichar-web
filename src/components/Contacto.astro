@@ -11,7 +11,7 @@
     <img src="/img/logo-kichar-final.png" alt="Kichar Snack" />
   </div>
   <div class="credits">
-    © 2026 Kichar Snack · Diseño <b>Chiare Estudio</b> · Desarrollo <b>Harvi Digital</b>
+    © 2026 Kichar Snack · Diseño <a href="https://chiarestudio.com.ar/" target="_blank" rel="noopener">Chiare Estudio</a> · Desarrollo <a href="https://www.harvi.digital/" target="_blank" rel="noopener">Harvi Digital</a>
   </div>
 </footer>
 
@@ -130,8 +130,13 @@
   letter-spacing: .04em;
 }
 
-.credits b {
+.credits a {
   font-weight: 600;
   opacity: .8;
+  color: inherit;
+  text-underline-offset: 3px;
+  transition: opacity .15s;
 }
+
+.credits a:hover { opacity: 1; }
 </style>

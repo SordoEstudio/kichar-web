@@ -20,7 +20,7 @@ const stats = [
             {s.n !== null
               ? <><span class="cnt" data-to={s.n}>{s.n}</span>{s.unit && <span class="unit">{s.unit}</span>}</>
               : s.prefix
-                ? <div class="gf-stack"><span class="gf-top">{s.prefix}</span><span>{s.unit}</span></div>
+                ? <div class="gf-stack"><span class="gf-top">{s.prefix}</span><span class="gf-free">{s.unit}</span></div>
                 : <span class="unit-main">{s.unit}</span>}
           </div>
           <b>{s.label}</b>
@@ -100,6 +100,12 @@ const stats = [
   text-transform: uppercase;
   padding-bottom: .15em;
   opacity: .7;
+}
+
+.gf-free {
+  font-size: inherit;
+  color: inherit;
+  line-height: 1;
 }
 
 .stat b {
