@@ -7,29 +7,14 @@
     <img src="/img/logo-dark.png" alt="Kichar Snack" />
   </div>
 
-  <svg class="aro capa" viewBox="0 0 800 300" fill="none" aria-hidden="true">
-    <path class="trazo" d="M60 190 C 40 110, 260 50, 430 52 C 640 54, 770 110, 748 170 C 726 236, 520 270, 360 266 C 190 262, 70 240, 60 190 C 54 160, 110 120, 200 98"
-      stroke="#141210" stroke-width="9" stroke-linecap="round"/>
-  </svg>
-
   <img class="pouch capa" src="/img/pack-clasico.png" alt="Paquete Kichar sabor Clásico" />
-
 
   <img class="capa t4" src="/img/pack-hot-chili.png" alt="" data-fg />
   <img class="capa t2" src="/img/pack-pimienta.png" alt="" data-fg />
 
-  <svg class="capa d-numeral" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-    <path d="M38 10 L28 92 M68 8 L58 90 M12 36 L90 30 M8 66 L86 60"
-      stroke="#141210" stroke-width="7" stroke-linecap="round"/>
-  </svg>
-  <svg class="capa d-estrella" viewBox="0 0 120 120" fill="none" aria-hidden="true">
-    <path d="M60 8 L70 44 L110 34 L80 62 L106 98 L66 80 L50 114 L44 76 L8 84 L36 56 L14 22 L50 38 Z"
-      stroke="#141210" stroke-width="5" stroke-linejoin="round"/>
-  </svg>
-  <svg class="capa d-garabato" viewBox="0 0 160 70" fill="none" aria-hidden="true">
-    <path d="M6 56 C 30 52, 34 14, 22 16 C 8 18, 20 60, 52 54 C 76 50, 74 12, 62 14 C 48 16, 60 58, 92 52 C 116 48, 114 10, 102 12 C 88 14, 100 58, 152 46"
-      stroke="#e1772b" stroke-width="8" stroke-linecap="round"/>
-  </svg>
+  <img class="capa d-numeral" src="/img/elem/1.png" alt="" aria-hidden="true" />
+  <img class="capa d-estrella" src="/img/elem/3.png" alt="" aria-hidden="true" />
+  <img class="capa d-garabato" src="/img/elem/2.png" alt="" aria-hidden="true" />
 
   <img class="capa t1" src="/img/pack-clasico.png" alt="" data-fg />
   <img class="capa t3" src="/img/pack-ajo.png" alt="" data-fg />
@@ -58,29 +43,20 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 14%;
+  top: 12%;
   text-align: center;
   display: flex;
   justify-content: center;
 }
 
 .hero .marca img {
-  width: clamp(260px, 38vw, 580px);
+  width: clamp(300px, 48vw, 680px);
   height: auto;
-}
-
-.hero .aro {
-  position: absolute;
-  left: 50%;
-  top: 58%;
-  width: min(80vw, 820px);
-  translate: -50% -50%;
 }
 
 .hero .pouch {
   display: none;
 }
-
 
 .hero .slogan {
   position: absolute;
@@ -99,14 +75,26 @@
   will-change: transform;
 }
 
-.t1 { width: clamp(130px, 17vw, 260px); left: -2%; top: 62%; z-index: 2; }
-.t2 { width: clamp(120px, 14vw, 220px); right: -1%; top: 22%; z-index: 2; }
-.t3 { width: clamp(110px, 13vw, 200px); right: 6%; bottom: -4%; z-index: 2; }
-.t4 { width: clamp(90px, 10vw, 160px); left: 16%; top: 16%; z-index: 2; }
+.t1 { width: clamp(130px, 17vw, 260px); left: 6%;  top: 62%; z-index: 2; }
+.t2 { width: clamp(120px, 14vw, 220px); right: 6%; top: 22%; z-index: 2; }
+.t3 { width: clamp(110px, 13vw, 200px); right: 12%; bottom: -4%; z-index: 2; }
+.t4 { width: clamp(90px, 10vw, 160px);  left: 20%; top: 16%; z-index: 2; }
 
-.d-estrella { width: clamp(70px, 8vw, 120px); right: 22%; top: 30%; }
-.d-garabato { width: clamp(90px, 10vw, 150px); left: 24%; bottom: 14%; }
-.d-numeral  { width: clamp(60px, 6vw, 90px); left: 7%; top: 30%; }
+.d-estrella {
+  width: clamp(70px, 8vw, 120px);
+  right: 22%; top: 30%;
+  mix-blend-mode: multiply;
+}
+.d-garabato {
+  width: clamp(90px, 10vw, 150px);
+  left: 24%; bottom: 14%;
+  mix-blend-mode: multiply;
+}
+.d-numeral {
+  width: clamp(60px, 6vw, 90px);
+  left: 7%; top: 30%;
+  mix-blend-mode: multiply;
+}
 
 @media (max-width: 640px) {
   .hero .pouch { top: 62%; }

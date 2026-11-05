@@ -3,25 +3,25 @@ const cartas = [
   {
     i: 0, c: "var(--dorado)", titulo: "Entrenamiento",
     pack: "/img/pack-clasico.png", alt: "Clásico",
-    foto: "https://picsum.photos/seed/gymfit/980/520",
+    foto: "/img/fotos/Escena4.jpg", objPos: "60% 30%",
     nota: "Abrís el paquete, cargás y seguís.",
   },
   {
     i: 1, c: "var(--ajo)", titulo: "Trabajo",
     pack: "/img/pack-ajo.png", alt: "Ajo",
-    foto: "https://picsum.photos/seed/deskwork/980/520",
+    foto: "/img/fotos/Escena5.jpg", objPos: "50% 20%",
     nota: "Snack de escritorio sin culpa.",
   },
   {
     i: 2, c: "var(--pimienta)", titulo: "Viajes",
     pack: "/img/pack-pimienta.png", alt: "Pimienta",
-    foto: "https://picsum.photos/seed/roadtrip/980/520",
+    foto: "/img/fotos/Escena6.jpg", objPos: "50% 15%",
     nota: "Entra en cualquier mochila.",
   },
   {
     i: 3, c: "var(--picante)", titulo: "Aire libre",
     pack: "/img/pack-picante.png", alt: "Picante",
-    foto: "https://picsum.photos/seed/hikingtrail/980/520",
+    foto: "/img/fotos/Escena3.png", objPos: "50% 35%",
     nota: "Trekking, bici, pesca. Te sigue.",
   },
 ];
@@ -36,7 +36,7 @@ const cartas = [
     {cartas.map((c) => (
       <div class="carta" style={`--i:${c.i};--c:${c.c}`}>
         <div class="foto">
-          <img src={c.foto} alt="" loading="lazy" />
+          <img src={c.foto} alt="" loading="lazy" style={`object-position:${c.objPos}`} />
           <em>{c.nota}</em>
         </div>
         <div class="rotulo">

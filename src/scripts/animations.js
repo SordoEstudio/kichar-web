@@ -45,7 +45,6 @@ if (reduce) {
 
     tl.to('.hero .fondo',   { yPercent: -30, ease: 'none' }, 0)
       .to('.hero .marca',   { yPercent: -55, scale: .9, ease: 'none' }, 0)
-      .to('.hero .aro',     { rotation: -18, scale: 1.15, ease: 'none' }, 0)
       .to('.hero .pouch',   { yPercent: -28, rotation: 8, scale: 1.08, ease: 'none' }, 0)
 
       .to('.t1',            { y: -520, x: 120,  rotation: 140,  ease: 'none' }, 0)
