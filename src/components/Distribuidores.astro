@@ -23,23 +23,39 @@ const packs = [
         Dejanos tus datos y te enviamos la propuesta comercial.
       </p>
       <form id="form-distri" novalidate>
-        <label for="f-nombre">
-          Nombre o comercio
-          <input id="f-nombre" name="nombre" type="text" required autocomplete="organization" placeholder="Ej: Dietética El Molino" />
-        </label>
-        <label for="f-tipo">
-          Tipo de negocio
-          <select id="f-tipo" name="tipo">
-            <option>Gimnasio</option>
-            <option>Dietética</option>
-            <option>Almacén / kiosco</option>
-            <option>Distribuidor</option>
-          </select>
-        </label>
-        <label for="f-ciudad">
-          Ciudad
-          <input id="f-ciudad" name="ciudad" type="text" autocomplete="address-level2" placeholder="Ej: Rafaela, Santa Fe" />
-        </label>
+
+        <div class="campo">
+          <input id="f-nombre" name="nombre" type="text" required autocomplete="organization" placeholder=" " />
+          <label for="f-nombre">Nombre o comercio</label>
+        </div>
+
+        <div class="campo campo--sel" id="campo-tipo">
+          <div class="csel" id="csel-tipo" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0">
+            <span class="csel__val"></span>
+            <svg class="csel__arrow" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <label class="flabel">Tipo de negocio</label>
+          <ul class="csel__list" role="listbox" aria-label="Tipo de negocio" hidden>
+            <li role="option" data-val="Gimnasio">Gimnasio</li>
+            <li role="option" data-val="Dietética">Dietética</li>
+            <li role="option" data-val="Almacén / kiosco">Almacén / kiosco</li>
+            <li role="option" data-val="Distribuidor">Distribuidor</li>
+          </ul>
+          <input type="hidden" name="tipo" />
+        </div>
+
+        <div class="campo">
+          <input id="f-ciudad" name="ciudad" type="text" autocomplete="address-level2" placeholder=" " />
+          <label for="f-ciudad">Ciudad</label>
+        </div>
+
+        <div class="campo">
+          <input id="f-contacto" name="contacto" type="text" autocomplete="tel" placeholder=" " />
+          <label for="f-contacto">Teléfono o email</label>
+        </div>
+
         <button class="btn" type="submit">Quiero ser punto de venta</button>
         <span class="ok-msg" id="ok-msg" role="status" hidden>
           ¡Listo! Te contactamos pronto.
@@ -50,12 +66,58 @@ const packs = [
 </section>
 
 <script>
+  // Submit
   const form = document.getElementById('form-distri');
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     const msg = document.getElementById('ok-msg') as HTMLElement;
     msg.hidden = false;
-    msg.textContent = '¡Listo! Te contactamos pronto.';
+  });
+
+  // Custom select
+  const campoSel = document.getElementById('campo-tipo') as HTMLElement;
+  const csel     = document.getElementById('csel-tipo')  as HTMLElement;
+  const cselVal  = csel?.querySelector('.csel__val')      as HTMLElement;
+  const cselList = campoSel?.querySelector('.csel__list') as HTMLElement;
+  const hiddenIn = campoSel?.querySelector('input[type="hidden"]') as HTMLInputElement;
+
+  function openSel() {
+    csel.classList.add('open');
+    csel.setAttribute('aria-expanded', 'true');
+    cselList.removeAttribute('hidden');
+    campoSel.classList.add('open');
+  }
+  function closeSel() {
+    csel.classList.remove('open');
+    csel.setAttribute('aria-expanded', 'false');
+    cselList.setAttribute('hidden', '');
+    campoSel.classList.remove('open');
+  }
+
+  csel?.addEventListener('click', () =>
+    csel.getAttribute('aria-expanded') === 'true' ? closeSel() : openSel()
+  );
+
+  csel?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); csel.click(); }
+    if (e.key === 'Escape') closeSel();
+  });
+
+  cselList?.addEventListener('click', (e) => {
+    const opt = (e.target as HTMLElement).closest('[role="option"]') as HTMLElement;
+    if (!opt) return;
+    const val = opt.dataset.val ?? '';
+    cselVal.textContent = val;
+    hiddenIn.value = val;
+    campoSel.classList.add('has-val');
+    cselList.querySelectorAll('[role="option"]').forEach(o => o.removeAttribute('aria-selected'));
+    opt.setAttribute('aria-selected', 'true');
+    closeSel();
+    csel.focus();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!campoSel?.contains(e.target as Node)) closeSel();
   });
 </script>
 
@@ -110,34 +172,151 @@ const packs = [
 
 form {
   display: grid;
-  gap: 12px;
+  gap: 14px;
   margin-top: 24px;
   max-width: 460px;
 }
 
-label {
-  font-family: var(--body);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  display: grid;
-  gap: 4px;
-}
+/* ---- Floating label inputs ---- */
+.campo { position: relative; }
 
-input,
-select {
+.campo input {
+  width: 100%;
   font: inherit;
   font-size: 16px;
-  padding: 12px;
+  padding: 16px 12px 10px;
   border-radius: 10px;
-  border: 2px solid var(--crema);
+  border: 2px solid rgba(250,249,239,.3);
   background: transparent;
+  color: var(--crema);
+  display: block;
+  transition: border-color .2s;
+}
+
+.campo input::placeholder { color: transparent; }
+
+.campo input:focus { outline: none; border-color: var(--crema); }
+
+.campo > label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(250,249,239,.45);
+  pointer-events: none;
+  background: var(--tinta);
+  padding: 0 4px;
+  line-height: 1;
+  transition: top .15s, font-size .15s, color .15s, letter-spacing .15s;
+}
+
+.campo input:focus + label,
+.campo input:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 11px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: rgba(250,249,239,.65);
+}
+
+.campo input:focus + label { color: var(--dorado); }
+
+/* ---- Custom select ---- */
+.campo--sel { position: relative; }
+
+.csel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 12px 10px;
+  border-radius: 10px;
+  border: 2px solid rgba(250,249,239,.3);
+  color: rgba(250,249,239,.45);
+  cursor: pointer;
+  user-select: none;
+  min-height: 52px;
+  transition: border-color .2s, color .2s;
+}
+
+.csel:focus,
+.csel.open {
+  outline: none;
+  border-color: var(--crema);
   color: var(--crema);
 }
 
-select option { color: var(--tinta); }
+.campo--sel.has-val .csel { color: var(--crema); }
 
-input::placeholder { color: #ffffff55; }
+.csel__arrow {
+  flex-shrink: 0;
+  transition: rotate .2s;
+}
+
+.csel.open .csel__arrow { rotate: 180deg; }
+
+.campo--sel .flabel {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(250,249,239,.45);
+  pointer-events: none;
+  background: var(--tinta);
+  padding: 0 4px;
+  line-height: 1;
+  transition: top .15s, font-size .15s, color .15s, letter-spacing .15s;
+}
+
+.campo--sel.has-val .flabel,
+.campo--sel.open .flabel {
+  top: 0;
+  font-size: 11px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: rgba(250,249,239,.65);
+}
+
+.campo--sel.open .flabel { color: var(--dorado); }
+
+.csel__list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #201c18;
+  border: 2px solid rgba(250,249,239,.3);
+  border-radius: 10px;
+  z-index: 50;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  overflow: hidden;
+}
+
+.csel__list[hidden] { display: none; }
+
+.csel__list li {
+  padding: 11px 14px;
+  color: var(--crema);
+  font-family: var(--body);
+  font-size: 15px;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+}
+
+.csel__list li:hover { background: var(--dorado); color: var(--tinta); }
+.csel__list li[aria-selected="true"] { background: rgba(234,171,51,.18); }
 
 .btn {
   font-family: var(--display);
