@@ -50,7 +50,7 @@
 }
 
 .hero .marca img {
-  width: clamp(300px, 48vw, 680px);
+  width: clamp(240px, 72vw, 680px);
   height: auto;
 }
 
@@ -97,7 +97,40 @@
 }
 
 @media (max-width: 640px) {
-  .hero .pouch { top: 62%; }
-  .d-estrella, .d-numeral { display: none; }
+  /* Logo y slogan siempre encima */
+  .hero .marca  { z-index: 3; }
+  .hero .slogan { z-index: 4; }
+
+  /* Pack central grande — domina la zona dorada */
+  .hero .pouch {
+    display: block;
+    width: clamp(140px, 38vw, 190px);
+    left: 50%;
+    bottom: 15%;
+    translate: -50% 0;
+    z-index: 2;
+    filter: drop-shadow(0 20px 28px rgba(0,0,0,.2));
+  }
+
+  /* Ocultar t1 (duplicado de pouch), t4 y garabato */
+  .t1, .t4, .d-garabato { display: none; }
+
+  /* Elementos decorativos pequeños flanqueando el logo */
+  .d-numeral {
+    display: block;
+    width: 48px;
+    left: 4%;
+    top: 25%;
+  }
+  .d-estrella {
+    display: block;
+    width: 54px;
+    right: 4%;
+    top: 25%;
+  }
+
+  /* Packs acento a los lados */
+  .t2 { width: 76px; right: 1%; top: 42%; }
+  .t3 { width: 70px; left:  1%; bottom: 24%; }
 }
 </style>

@@ -106,25 +106,28 @@ if (reduce) {
     );
   }
 
-  // .nucleo wraps img + orbita so both move together — keeps orbit centered on meat
-  gsap.fromTo('.conoce .nucleo',
-    { yPercent: 12, rotation: -4 },
-    { yPercent: -8,  rotation:  2, ease: 'none',
-      scrollTrigger: { trigger: '.conoce', start: 'top bottom', end: 'bottom top', scrub: true } }
-  );
+  // Desktop: parallax + tilt. Mobile: solo yPercent, sin rotación (preserva layout flex).
+  mm.add({ desk: '(min-width: 821px)', mob: '(max-width: 820px)' }, (ctx) => {
+    const { desk } = ctx.conditions;
+    gsap.fromTo('.conoce .nucleo',
+      { yPercent: desk ? 12 : 5, rotation: desk ? -4 : 0 },
+      { yPercent: desk ? -8  : -3, rotation: desk ?  2 : 0, ease: 'none',
+        scrollTrigger: { trigger: '.conoce', start: 'top bottom', end: 'bottom top', scrub: true } }
+    );
+  });
 
-  // Orbit + cursor parallax en .pila (desktop)
-  mm.add('(min-width: 821px)', () => {
+  // Orbit desktop + mobile; cursor parallax solo desktop
+  mm.add({ desk: '(min-width: 821px)', mob: '(max-width: 820px)' }, (ctx) => {
+    const { desk } = ctx.conditions;
     const sec = document.querySelector('.conoce');
     if (!sec) return;
-    const pila = sec.querySelector('.pila');
 
-    // Initial card tilts (CSS rotate removed; handled here)
+    // Inclinaciones iniciales de cards
     gsap.set('.attr-1', { rotation: -3 });
     gsap.set('.attr-2', { rotation:  2 });
     gsap.set('.attr-3', { rotation: -1 });
 
-    // Orbit scroll: orbita rotates CW, attrs counter-rotate to stay upright
+    // Orbita rota 360° CW; cards counter-rotan para mantenerse derechas
     const orbitST = {
       trigger: '.conoce',
       start: 'top 80%',
@@ -133,12 +136,14 @@ if (reduce) {
     };
 
     gsap.to('.orbita',  { rotation: 360,  ease: 'none', scrollTrigger: orbitST });
-    // counter-rotation = initial_tilt - 360
     gsap.to('.attr-1',  { rotation: -363, ease: 'none', scrollTrigger: orbitST });
     gsap.to('.attr-2',  { rotation: -358, ease: 'none', scrollTrigger: orbitST });
     gsap.to('.attr-3',  { rotation: -361, ease: 'none', scrollTrigger: orbitST });
 
-    // Cursor parallax: nucleo moves as unit (img + orbit always aligned)
+    if (!desk) return () => gsap.set(['.attr-1', '.attr-2', '.attr-3'], { clearProps: 'rotation' });
+
+    // Cursor parallax solo desktop
+    const pila = sec.querySelector('.pila');
     const pairs = [
       [sec.querySelector('.nucleo'),   9],
       [pila.querySelector('.aro-svg'), 4],
@@ -165,12 +170,10 @@ if (reduce) {
     };
   });
 
-  // ---------- 3. PRODUCTOS: scroll horizontal + linger + color por sabor ----------
-  mm.add('(min-width: 821px)', () => {
-    const pista  = document.querySelector('.pista');
-    const panels = gsap.utils.toArray('.panel:not(.panel--spacer)');
-    if (!pista || !panels.length) return;
-
+  // ---------- 3. PRODUCTOS: scroll horizontal + color (desktop y mobile) ----------
+  const pista  = document.querySelector('.pista');
+  const panels = gsap.utils.toArray('.panel:not(.panel--spacer)');
+  if (pista && panels.length) {
     const dist = () => pista.scrollWidth - window.innerWidth;
 
     const hz = gsap.to(pista, {
@@ -213,8 +216,7 @@ if (reduce) {
         }
       );
     });
-
-  });
+  }
 
   // ---------- 4. POR QUÉ: contadores + sellos + cintas ----------
   document.querySelectorAll('.cnt').forEach((el) => {

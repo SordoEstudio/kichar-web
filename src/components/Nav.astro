@@ -2,7 +2,12 @@
   <a class="nav-logo" href="#inicio" aria-label="Volver al inicio">
     <img src="/img/logo4.png" alt="Kichar" />
   </a>
-  <ul class="nav-links">
+
+  <button class="nav-ham" id="nav-ham" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <ul class="nav-links" id="nav-menu">
     <li><a href="#conoce">Conocé</a></li>
     <li><a href="#productos">Productos</a></li>
     <li><a href="#porque">Por qué</a></li>
@@ -12,18 +17,46 @@
 </nav>
 
 <script>
-  const nav  = document.getElementById('nav-g');
-  const hero = document.querySelector('.hero') as HTMLElement;
+  const nav  = document.getElementById('nav-g')  as HTMLElement;
+  const hero = document.querySelector('.hero')    as HTMLElement;
+  const ham  = document.getElementById('nav-ham') as HTMLButtonElement;
+  const menu = document.getElementById('nav-menu') as HTMLElement;
   if (!nav || !hero) throw new Error();
 
+  // ---------- Hamburger toggle ----------
+  function openMenu() {
+    nav.classList.add('menu-open');
+    ham?.setAttribute('aria-expanded', 'true');
+    ham?.setAttribute('aria-label', 'Cerrar menú');
+  }
+  function closeMenu() {
+    nav.classList.remove('menu-open');
+    ham?.setAttribute('aria-expanded', 'false');
+    ham?.setAttribute('aria-label', 'Abrir menú');
+  }
+
+  ham?.addEventListener('click', () =>
+    nav.classList.contains('menu-open') ? closeMenu() : openMenu()
+  );
+
+  // Cierra al hacer click en un link
+  menu?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', closeMenu)
+  );
+
+  // ---------- Scroll show/hide ----------
   let prevY   = window.scrollY;
   let ticking = false;
 
   function update() {
-    const y       = window.scrollY;
+    const y        = window.scrollY;
     const pastHero = y > hero.offsetTop + hero.offsetHeight * 0.6;
     const goingUp  = y < prevY;
-    nav.classList.toggle('visible', pastHero && goingUp);
+    const show     = pastHero && goingUp;
+
+    nav.classList.toggle('visible', show);
+    if (!show) closeMenu();
+
     prevY   = y;
     ticking = false;
   }
@@ -74,6 +107,7 @@
   display: block;
 }
 
+/* ---------- Links (desktop) ---------- */
 .nav-links {
   display: flex;
   gap: clamp(16px, 2.5vw, 36px);
@@ -111,12 +145,72 @@
   color: var(--tinta) !important;
 }
 
-@media (max-width: 700px) {
-  .nav-links li:not(:first-child):not(:last-child) { display: none; }
-  .nav-links { gap: 14px; }
+/* ---------- Hamburger button ---------- */
+.nav-ham {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
 }
 
-@media (max-width: 400px) {
-  .nav-links li:first-child { display: none; }
+.nav-ham span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--tinta);
+  border-radius: 2px;
+  transition: transform .25s, opacity .2s;
+  transform-origin: center;
+}
+
+/* Hamburguer → X */
+.nav-g.menu-open .nav-ham span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-g.menu-open .nav-ham span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-g.menu-open .nav-ham span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 700px) {
+  .nav-ham { display: flex; }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(250,249,239,.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1.5px solid rgba(20,18,16,.08);
+    padding: 8px 0 16px;
+  }
+
+  .nav-g.menu-open .nav-links { display: flex; }
+
+  .nav-links li { display: block; }
+
+  .nav-links a {
+    display: block;
+    padding: 11px clamp(20px, 6vw, 48px);
+    font-size: 13px;
+    opacity: .6;
+  }
+
+  .nav-cta {
+    margin: 10px clamp(20px, 6vw, 48px) 0;
+    padding: 10px 16px !important;
+    text-align: center;
+    border-radius: 999px;
+  }
 }
 </style>
